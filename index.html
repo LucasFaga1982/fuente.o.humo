@@ -117,9 +117,9 @@
     .toast.visible { display: block; transform: translateY(0); }
     .toast.error { background: rgba(239,107,107,0.95); border-color: #c95252; }
 
-    /* Contenedor del PDF - Oculto hasta generar */
-    #pdfWrapper { position: absolute; left: -9999px; top: 0; width: 800px; }
-    #pdfTemplate { background: #ffffff; color: #111827; font-family: 'Inter', sans-serif; }
+    /* Contenedor del PDF - Oculto y fijo para evitar desplazamientos */
+    #pdfWrapper { position: absolute; left: -9999px; top: 0; width: 800px; background: #ffffff; }
+    #pdfTemplate { background: #ffffff; color: #111827; font-family: 'Inter', sans-serif; box-sizing: border-box; margin: 0; padding: 40px; width: 800px; }
 
     @media (max-width: 1100px) { .app-shell, .start-card, .workspace { grid-template-columns: 1fr; } .sidebar { position: static; } }
     @media (max-width: 760px) {
@@ -282,7 +282,6 @@
   </div>
 
   <script>
-    // CASOS CON DESCRIPCIONES CORREGIDAS PARA QUE COINCIDAN EXACTO CON LOS VIDEOS
     const CASES = [
       { id: 1, title: "Audio familiar", description: "Un video casero enseña a preparar un té con miel, limón y jengibre apelando al saber tradicional que se transmite de generación en generación.", videoUrl: "https://www.youtube.com/embed/2LX1QpdlsVI" },
       { id: 2, title: "Receta profesional", description: "Un médico explica desde un consultorio por qué es riesgoso automedicarse con antibióticos, utilizando evidencia científica.", videoUrl: "https://www.youtube.com/embed/Mxm4OM2t8yI" },
@@ -413,7 +412,6 @@
         return;
       }
 
-      // Preparar datos texto
       document.getElementById('pdfGroupName').textContent = appState.groupName;
       document.getElementById('pdfCourse').textContent = appState.course;
       document.getElementById('pdfIntegrantes').textContent = integrantes;
@@ -421,7 +419,7 @@
       const hoy = new Date();
       document.getElementById('pdfDate').textContent = hoy.toLocaleDateString('es-AR');
 
-      // Gráfico
+      // Pasar gráfico a imagen con texto negro para el PDF
       const originalBg = myChart.config.options.plugins.legend.labels.color;
       myChart.config.options.plugins.legend.labels.color = '#1f2937'; 
       myChart.update();
@@ -431,7 +429,6 @@
         myChart.config.options.plugins.legend.labels.color = originalBg;
         myChart.update();
 
-        // Limpiar lista de casos
         const listDiv = document.getElementById('pdfAnswersList');
         listDiv.innerHTML = '';
 
@@ -446,7 +443,6 @@
           else if(badgeClass === 'humo') { badgeColor = '#991b1b'; badgeBg = '#fee2e2'; }
 
           const div = document.createElement('div');
-          // ATENCIÓN ACÁ: page-break-inside: avoid soluciona que los casos no se corten por la mitad entre hojas
           div.innerHTML = `
             <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; page-break-inside: avoid; break-inside: avoid;">
               <h3 style="margin: 0 0 5px 0; font-size: 16px; color: #111827;">Caso ${index + 1}: ${c.title}</h3>
@@ -467,33 +463,44 @@
         document.getElementById('triggerDownloadBtn').textContent = "Generando PDF...";
         document.getElementById('triggerDownloadBtn').disabled = true;
 
-        // Revelar contenedor sin desplazar el scroll visualmente
+        // Revelar contenedor en coordenada X exacta (0)
         const wrapper = document.getElementById('pdfWrapper');
         wrapper.style.left = '0';
+        wrapper.style.top = '0';
         wrapper.style.zIndex = '-100';
 
-        // Configuraciones CLAVES para el PDF: scrollY:0 evita espacios en blanco arriba, pagebreak: {mode: 'css'} evita el corte del Caso 6
-        const element = document.getElementById('pdfTemplate');
-        const opt = {
-          margin: 15,
-          filename: `Informe_Fuente_o_Humo_${appState.groupName.replace(/\s+/g, '_')}.pdf`,
-          image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true, scrollY: 0, windowWidth: 800 },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
-          pagebreak: { mode: ['css', 'legacy'] }
-        };
+        // EL SECRETO: El delay de 150ms le da tiempo al navegador a posicionar el elemento perfectamente en X=0
+        setTimeout(() => {
+          const element = document.getElementById('pdfTemplate');
+          const opt = {
+            margin: 15,
+            filename: `Informe_Fuente_o_Humo_${appState.groupName.replace(/\s+/g, '_')}.pdf`,
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { 
+              scale: 2, 
+              useCORS: true, 
+              x: 0, 
+              y: 0, 
+              scrollX: 0, 
+              scrollY: 0, 
+              windowWidth: 800 
+            },
+            jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+            pagebreak: { mode: ['css', 'legacy'] }
+          };
 
-        html2pdf().set(opt).from(element).save().then(() => {
-          // Volver a esconder
-          wrapper.style.left = '-9999px';
-          wrapper.style.zIndex = 'auto';
+          html2pdf().set(opt).from(element).save().then(() => {
+            // Volver a esconder
+            wrapper.style.left = '-9999px';
+            wrapper.style.zIndex = 'auto';
 
-          document.getElementById('triggerDownloadBtn').textContent = "Descargar PDF para entregar";
-          document.getElementById('triggerDownloadBtn').disabled = false;
-          showToast("Entregar en Classroom");
-        });
+            document.getElementById('triggerDownloadBtn').textContent = "Descargar PDF para entregar";
+            document.getElementById('triggerDownloadBtn').disabled = false;
+            showToast("Entregar en Classroom");
+          });
+        }, 150);
 
-      }, 400);
+      }, 400); // Delay gráfico
     });
 
   </script>
