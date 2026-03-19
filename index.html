@@ -117,20 +117,11 @@
     .toast.visible { display: block; transform: translateY(0); }
     .toast.error { background: rgba(239,107,107,0.95); border-color: #c95252; }
 
-    /* Plantilla Oculta para el PDF (Fondo blanco, texto negro) */
-    #pdfTemplate { position: absolute; left: -9999px; top: 0; width: 800px; padding: 40px; background: #ffffff; color: #111827; font-family: 'Inter', sans-serif; }
-    .pdf-header { border-bottom: 2px solid #e5e7eb; padding-bottom: 20px; margin-bottom: 30px; }
-    .pdf-header h1 { font-size: 28px; color: #1f2937; margin: 0 0 10px 0; }
-    .pdf-meta p { margin: 5px 0; font-size: 14px; color: #4b5563; }
-    .pdf-chart-box { text-align: center; margin: 30px 0; }
-    .pdf-chart-box img { max-width: 300px; height: auto; }
-    .pdf-case { margin-bottom: 25px; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; page-break-inside: avoid; }
-    .pdf-case h3 { margin: 0 0 10px 0; font-size: 16px; color: #111827; }
-    .pdf-badge { display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-right: 10px; }
-    .pdf-badge.fuente { background: #d1fae5; color: #065f46; }
-    .pdf-badge.humo { background: #fee2e2; color: #991b1b; }
-    .pdf-badge.revisar { background: #fef3c7; color: #92400e; }
-    .pdf-justification { font-size: 14px; color: #374151; margin-top: 10px; font-style: italic; }
+    /* Wrapper Oculto para Generar PDF */
+    #pdfWrapper {
+      height: 0;
+      overflow: hidden;
+    }
 
     @media (max-width: 1100px) { .app-shell, .start-card, .workspace { grid-template-columns: 1fr; } .sidebar { position: static; } }
     @media (max-width: 760px) {
@@ -155,7 +146,7 @@
         <h2>Preparar grupo</h2>
         <p class="brand-copy">Júntense con sus compañeros, elijan un nombre para el equipo y prepárense para poner a prueba todo lo que creen saber.</p>
         <div>
-          <label class="field-label">Nombre del grupo</label>
+          <label class="field-label">Nombre del equipo / grupo</label>
           <input id="groupNameInput" type="text" placeholder="Ej: Grupo 3">
         </div>
         <div>
@@ -177,7 +168,7 @@
             <strong id="answeredCount">0/10</strong>
           </div>
           <div class="stat-card">
-            <small>Grupo</small>
+            <small>Equipo</small>
             <strong id="groupNameStat">—</strong>
           </div>
         </div>
@@ -253,7 +244,7 @@
   <div class="modal-overlay" id="nameModal">
     <div class="modal-content">
       <h3 style="margin-bottom: 1rem; font-size: 1.5rem;">Casi listo...</h3>
-      <label class="field-label">Nombres de los integrantes del grupo:</label>
+      <label class="field-label">Nombres de los integrantes del equipo:</label>
       <textarea id="integrantesInput" placeholder="Ej: Lucas, Mili, Mateo..." style="min-height: 80px; margin-bottom: 1.5rem;"></textarea>
       <div style="display: flex; gap: 1rem; justify-content: flex-end;">
         <button class="btn btn-secondary" id="cancelModalBtn">Cancelar</button>
@@ -264,24 +255,32 @@
 
   <div class="toast" id="appToast">Mensaje</div>
 
-  <div id="pdfTemplate">
-    <div class="pdf-header">
-      <h1>Informe de Análisis: Fuente o Humo</h1>
-      <div class="pdf-meta">
-        <p><strong>Grupo:</strong> <span id="pdfGroupName"></span></p>
-        <p><strong>Curso:</strong> <span id="pdfCourse"></span></p>
-        <p><strong>Integrantes:</strong> <span id="pdfIntegrantes"></span></p>
-        <p><strong>Fecha:</strong> <span id="pdfDate"></span></p>
+  <div id="pdfWrapper">
+    <div id="pdfTemplate" style="width: 800px; padding: 40px; background: #ffffff; color: #111827; font-family: 'Inter', sans-serif;">
+      
+      <div style="border-bottom: 2px solid #e5e7eb; padding-bottom: 20px; margin-bottom: 30px;">
+        <h1 style="font-size: 28px; color: #1f2937; margin: 0 0 10px 0;">Informe de Análisis: Fuente o Humo</h1>
+        <div>
+          <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Equipo:</strong> <span id="pdfGroupName"></span></p>
+          <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Curso:</strong> <span id="pdfCourse"></span></p>
+          <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Integrantes:</strong> <span id="pdfIntegrantes"></span></p>
+          <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Docente:</strong> Lucas Matias Faga</p>
+          <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Fecha:</strong> <span id="pdfDate"></span></p>
+          
+          <div style="margin-top: 20px; font-weight: bold; color: #065f46; font-size: 16px; background: #d1fae5; border: 1px solid #34d399; padding: 12px; border-radius: 8px; text-align: center;">
+            📌 Entregar este informe en Classroom como respuesta a la actividad.
+          </div>
+        </div>
       </div>
-    </div>
-    
-    <div class="pdf-chart-box">
-      <h3 style="margin-bottom: 10px;">Distribución de Respuestas</h3>
-      <img id="pdfChartImg" src="" alt="Gráfico de resultados">
-    </div>
+      
+      <div style="text-align: center; margin: 30px 0;">
+        <h3 style="margin-bottom: 15px; color: #1f2937;">Distribución de Respuestas</h3>
+        <img id="pdfChartImg" src="" alt="Gráfico de resultados" style="max-width: 320px; height: auto;">
+      </div>
 
-    <div id="pdfAnswersList">
-      </div>
+      <div id="pdfAnswersList"></div>
+
+    </div>
   </div>
 
   <script>
@@ -366,7 +365,7 @@
     document.getElementById('nextBtn').addEventListener('click', () => {
       const currentRes = appState.responses[CASES[appState.currentIndex].id];
       if (!currentRes || !currentRes.classification || !currentRes.confidence || !currentRes.justification.trim()) {
-        showToast("Completá las 3 opciones para avanzar.", true);
+        showToast("¡Epa! No te escapes sin mojarte. Completá las 3 opciones para avanzar.", true);
         return;
       }
 
@@ -423,11 +422,11 @@
     document.getElementById('confirmDownloadBtn').addEventListener('click', () => {
       const integrantes = document.getElementById('integrantesInput').value;
       if(!integrantes.trim()) {
-        showToast("Por favor, ingresá los nombres.", true);
+        showToast("Por favor, ingresá los nombres de los integrantes.", true);
         return;
       }
 
-      // Preparar plantilla PDF
+      // 1. Cargar datos en la plantilla HTML
       document.getElementById('pdfGroupName').textContent = appState.groupName;
       document.getElementById('pdfCourse').textContent = appState.course;
       document.getElementById('pdfIntegrantes').textContent = integrantes;
@@ -435,47 +434,64 @@
       const hoy = new Date();
       document.getElementById('pdfDate').textContent = hoy.toLocaleDateString('es-AR');
 
-      // Pasar gráfico a imagen (con fondo blanco para el PDF)
+      // 2. Pasar el gráfico a formato imagen para el PDF (cambiando color de letra a negro)
       const originalBg = myChart.config.options.plugins.legend.labels.color;
-      myChart.config.options.plugins.legend.labels.color = '#000'; // Letras negras para impresión
+      myChart.config.options.plugins.legend.labels.color = '#1f2937'; 
       myChart.update();
       
       setTimeout(() => {
         document.getElementById('pdfChartImg').src = myChart.toBase64Image();
         
-        // Volver gráfico al color original
+        // Volver gráfico al color oscuro de la app
         myChart.config.options.plugins.legend.labels.color = originalBg;
         myChart.update();
 
-        // Armar lista de respuestas
+        // 3. Renderizar las respuestas caso por caso
         const listDiv = document.getElementById('pdfAnswersList');
         listDiv.innerHTML = '';
 
         CASES.forEach((c, index) => {
           const res = appState.responses[c.id];
-          const div = document.createElement('div');
-          div.className = 'pdf-case';
-          
-          let badgeClass = res.classification;
-          let labelStr = res.classification === 'fuente' ? 'FUENTE' : (res.classification === 'humo' ? 'HUMO' : 'REVISAR');
+          if(!res) return;
 
+          let badgeClass = res.classification;
+          let labelStr = badgeClass === 'fuente' ? 'FUENTE' : (badgeClass === 'humo' ? 'HUMO' : 'REVISAR');
+          
+          let badgeColor = '#92400e'; let badgeBg = '#fef3c7'; // Defaults to Revisar
+          if(badgeClass === 'fuente') { badgeColor = '#065f46'; badgeBg = '#d1fae5'; }
+          else if(badgeClass === 'humo') { badgeColor = '#991b1b'; badgeBg = '#fee2e2'; }
+
+          const div = document.createElement('div');
+          // HTML inyectado con CSS inline para garantizar que el PDF lo lea bien
           div.innerHTML = `
-            <h3>Caso ${index + 1}: ${c.title}</h3>
-            <div style="margin-bottom: 5px;">
-              <span class="pdf-badge ${badgeClass}">${labelStr}</span>
-              <span style="font-size: 13px; color: #4b5563;">Seguridad: ${res.confidence}/5</span>
+            <div style="margin-bottom: 25px; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; page-break-inside: avoid;">
+              <h3 style="margin: 0 0 8px 0; font-size: 16px; color: #111827;">Caso ${index + 1}: ${c.title}</h3>
+              <p style="font-size: 13px; color: #4b5563; margin-bottom: 12px;"><em>${c.description}</em></p>
+              
+              <div style="margin-bottom: 12px;">
+                <span style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-right: 10px; color: ${badgeColor}; background: ${badgeBg};">${labelStr}</span>
+                <span style="font-size: 13px; color: #4b5563;"><strong>Seguridad:</strong> ${res.confidence}/5</span>
+              </div>
+              
+              <p style="font-size: 14px; color: #1f2937; margin: 0;"><strong>Justificación:</strong> "${res.justification}"</p>
             </div>
-            <p class="pdf-justification">"${res.justification}"</p>
           `;
           listDiv.appendChild(div);
         });
 
-        // Ocultar modal y mostrar loading
+        // Ocultar modal e indicar carga
         document.getElementById('nameModal').classList.remove('visible');
         document.getElementById('triggerDownloadBtn').textContent = "Generando PDF...";
         document.getElementById('triggerDownloadBtn').disabled = true;
 
-        // Generar PDF
+        // 4. Estrategia anti PDF-en-blanco: Hacer visible el contenedor escondiéndolo con z-index
+        const wrapper = document.getElementById('pdfWrapper');
+        wrapper.style.height = 'auto'; 
+        wrapper.style.position = 'absolute'; 
+        wrapper.style.top = '0';
+        wrapper.style.zIndex = '-100'; 
+
+        // 5. Configurar y generar PDF
         const element = document.getElementById('pdfTemplate');
         const opt = {
           margin: 15,
@@ -486,13 +502,19 @@
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
+          // Revertir contenedor oculto
+          wrapper.style.height = '0';
+          wrapper.style.position = 'static';
+          wrapper.style.zIndex = 'auto';
+
           document.getElementById('triggerDownloadBtn').textContent = "Descargar PDF para entregar";
           document.getElementById('triggerDownloadBtn').disabled = false;
-          // MENSAJE DE ÉXITO SOLICITADO
-          showToast("subir este pdf, como respuesta en la actividad de CLASSROOM");
+          
+          // Mensaje exacto de éxito
+          showToast("Entregar en Classroom");
         });
 
-      }, 300); // Pequeño delay para que el gráfico se actualice antes de capturar la imagen
+      }, 400); // Tiempo prudencial para que el gráfico Canvas actualice colores
     });
 
   </script>
