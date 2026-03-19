@@ -117,9 +117,9 @@
     .toast.visible { display: block; transform: translateY(0); }
     .toast.error { background: rgba(239,107,107,0.95); border-color: #c95252; }
 
-    /* Contenedor del PDF - Oculto y fijo para evitar desplazamientos */
-    #pdfWrapper { position: absolute; left: -9999px; top: 0; width: 800px; background: #ffffff; }
-    #pdfTemplate { background: #ffffff; color: #111827; font-family: 'Inter', sans-serif; box-sizing: border-box; margin: 0; padding: 40px; width: 800px; }
+    /* Contenedor del PDF - Ajustado a 720px para no desbordar hoja A4 */
+    #pdfWrapper { position: absolute; left: -9999px; top: 0; width: 720px; background: #ffffff; }
+    #pdfTemplate { background: #ffffff; color: #111827; font-family: 'Inter', sans-serif; box-sizing: border-box; margin: 0; padding: 30px; width: 720px; overflow-wrap: break-word; }
 
     @media (max-width: 1100px) { .app-shell, .start-card, .workspace { grid-template-columns: 1fr; } .sidebar { position: static; } }
     @media (max-width: 760px) {
@@ -463,13 +463,13 @@
         document.getElementById('triggerDownloadBtn').textContent = "Generando PDF...";
         document.getElementById('triggerDownloadBtn').disabled = true;
 
-        // Revelar contenedor en coordenada X exacta (0)
+        // Revelar contenedor en X exacta (0)
         const wrapper = document.getElementById('pdfWrapper');
         wrapper.style.left = '0';
         wrapper.style.top = '0';
         wrapper.style.zIndex = '-100';
 
-        // EL SECRETO: El delay de 150ms le da tiempo al navegador a posicionar el elemento perfectamente en X=0
+        // Capturar con ventana restringida a 720px para asegurar que no exceda A4
         setTimeout(() => {
           const element = document.getElementById('pdfTemplate');
           const opt = {
@@ -483,7 +483,7 @@
               y: 0, 
               scrollX: 0, 
               scrollY: 0, 
-              windowWidth: 800 
+              windowWidth: 720
             },
             jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
             pagebreak: { mode: ['css', 'legacy'] }
@@ -500,7 +500,7 @@
           });
         }, 150);
 
-      }, 400); // Delay gráfico
+      }, 400); 
     });
 
   </script>
