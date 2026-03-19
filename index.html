@@ -108,7 +108,7 @@
     .chart-container { width: 100%; max-width: 350px; margin: 2rem auto; }
     .report-actions { display: flex; justify-content: center; gap: 1rem; margin: 2rem 0; }
 
-    /* Modal Nombres Integrantes */
+    /* Modal Integrantes */
     .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(5px); z-index: 100; display: none; place-items: center; }
     .modal-overlay.visible { display: grid; }
     .modal-content { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); padding: 2rem; width: 90%; max-width: 500px; box-shadow: var(--shadow); }
@@ -117,11 +117,9 @@
     .toast.visible { display: block; transform: translateY(0); }
     .toast.error { background: rgba(239,107,107,0.95); border-color: #c95252; }
 
-    /* Wrapper Oculto para Generar PDF */
-    #pdfWrapper {
-      height: 0;
-      overflow: hidden;
-    }
+    /* Contenedor del PDF - Oculto hasta generar */
+    #pdfWrapper { position: absolute; left: -9999px; top: 0; width: 800px; }
+    #pdfTemplate { background: #ffffff; color: #111827; font-family: 'Inter', sans-serif; }
 
     @media (max-width: 1100px) { .app-shell, .start-card, .workspace { grid-template-columns: 1fr; } .sidebar { position: static; } }
     @media (max-width: 760px) {
@@ -256,10 +254,10 @@
   <div class="toast" id="appToast">Mensaje</div>
 
   <div id="pdfWrapper">
-    <div id="pdfTemplate" style="width: 800px; padding: 40px; background: #ffffff; color: #111827; font-family: 'Inter', sans-serif;">
+    <div id="pdfTemplate">
       
-      <div style="border-bottom: 2px solid #e5e7eb; padding-bottom: 20px; margin-bottom: 30px;">
-        <h1 style="font-size: 28px; color: #1f2937; margin: 0 0 10px 0;">Informe de Análisis: Fuente o Humo</h1>
+      <div style="border-bottom: 2px solid #e5e7eb; padding-bottom: 15px; margin-bottom: 20px;">
+        <h1 style="font-size: 26px; color: #1f2937; margin: 0 0 10px 0;">Informe de Análisis: Fuente o Humo</h1>
         <div>
           <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Equipo:</strong> <span id="pdfGroupName"></span></p>
           <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Curso:</strong> <span id="pdfCourse"></span></p>
@@ -267,15 +265,15 @@
           <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Docente:</strong> Lucas Matias Faga</p>
           <p style="margin: 5px 0; font-size: 14px; color: #4b5563;"><strong>Fecha:</strong> <span id="pdfDate"></span></p>
           
-          <div style="margin-top: 20px; font-weight: bold; color: #065f46; font-size: 16px; background: #d1fae5; border: 1px solid #34d399; padding: 12px; border-radius: 8px; text-align: center;">
+          <div style="margin-top: 15px; font-weight: bold; color: #065f46; font-size: 15px; background: #d1fae5; border: 1px solid #34d399; padding: 10px; border-radius: 8px; text-align: center;">
             📌 Entregar este informe en Classroom como respuesta a la actividad.
           </div>
         </div>
       </div>
       
-      <div style="text-align: center; margin: 30px 0;">
-        <h3 style="margin-bottom: 15px; color: #1f2937;">Distribución de Respuestas</h3>
-        <img id="pdfChartImg" src="" alt="Gráfico de resultados" style="max-width: 320px; height: auto;">
+      <div style="text-align: center; margin: 20px 0;">
+        <h3 style="margin-bottom: 10px; color: #1f2937;">Distribución de Respuestas</h3>
+        <img id="pdfChartImg" src="" alt="Gráfico de resultados" style="max-width: 280px; height: auto;">
       </div>
 
       <div id="pdfAnswersList"></div>
@@ -284,23 +282,23 @@
   </div>
 
   <script>
+    // CASOS CON DESCRIPCIONES CORREGIDAS PARA QUE COINCIDAN EXACTO CON LOS VIDEOS
     const CASES = [
-      { id: 1, title: "Audio familiar", description: "Una voz cercana recomienda miel, limón y jengibre para el resfrío.", videoUrl: "https://www.youtube.com/embed/2LX1QpdlsVI" },
-      { id: 2, title: "Receta profesional", description: "Un médico deja una indicación precisa sobre el uso de antibióticos.", videoUrl: "https://www.youtube.com/embed/Mxm4OM2t8yI" },
-      { id: 3, title: "Presentimiento", description: "Alguien 'siente' que algo malo va a pasar y actúa en consecuencia.", videoUrl: "https://www.youtube.com/embed/e9Cq9mHzRt0" },
-      { id: 4, title: "Tutorial exprés", description: "Un video enseña a arreglar un enchufe en 3 minutos. Sin teoría, pragmatismo puro.", videoUrl: "https://www.youtube.com/embed/N2wv5yqB-Wc" },
-      { id: 5, title: "Saber comunitario", description: "Comunidades rurales anticipan lluvias observando la naturaleza.", videoUrl: "https://www.youtube.com/embed/oFsU_cmvrUA" },
-      { id: 6, title: "Recomendación algorítmica", description: "Una máquina procesa tus datos para sugerirte qué consumir.", videoUrl: "https://www.youtube.com/embed/RSJrBEhdZxw" },
-      { id: 7, title: "Horóscopo", description: "Una descripción general parece hablar exactamente de tu vida actual.", videoUrl: "https://www.youtube.com/embed/vhKto-GTwWE" },
-      { id: 8, title: "Aprendizaje por observación", description: "Aprender a cocinar mirando unas manos, sin explicación teórica.", videoUrl: "https://www.youtube.com/embed/9yNfnL195SI" },
-      { id: 9, title: "Marketing científico", description: "Una publicidad afirma ser recomendada por '9 de cada 10 odontólogos'.", videoUrl: "https://www.youtube.com/embed/ZCWLCjlgNGc" },
-      { id: 10, title: "Influencer", description: "Un creador de contenido asegura que tomar un suplemento le 'cambió la vida'.", videoUrl: "https://www.youtube.com/embed/9sml5adxGgE" }
+      { id: 1, title: "Audio familiar", description: "Un video casero enseña a preparar un té con miel, limón y jengibre apelando al saber tradicional que se transmite de generación en generación.", videoUrl: "https://www.youtube.com/embed/2LX1QpdlsVI" },
+      { id: 2, title: "Receta profesional", description: "Un médico explica desde un consultorio por qué es riesgoso automedicarse con antibióticos, utilizando evidencia científica.", videoUrl: "https://www.youtube.com/embed/Mxm4OM2t8yI" },
+      { id: 3, title: "Presentimiento", description: "El tráiler de un thriller ('Presentimientos') donde las corazonadas y sueños guían las acciones de la protagonista sin evidencia lógica.", videoUrl: "https://www.youtube.com/embed/e9Cq9mHzRt0" },
+      { id: 4, title: "Tutorial exprés", description: "Un tutorial paso a paso que enseña cómo reparar un enchufe en la pared de manera práctica, sin detenerse a explicar teoría eléctrica.", videoUrl: "https://www.youtube.com/embed/N2wv5yqB-Wc" },
+      { id: 5, title: "Saber comunitario", description: "Productores rurales explican cómo pronostican la lluvia observando bioindicadores de la naturaleza (comportamiento de animales e insectos).", videoUrl: "https://www.youtube.com/embed/oFsU_cmvrUA" },
+      { id: 6, title: "Recomendación algorítmica", description: "Un micro-documental de la BBC que ilustra cómo los algoritmos aprenden de nuestra huella digital para decidir qué contenido recomendarnos.", videoUrl: "https://www.youtube.com/embed/RSJrBEhdZxw" },
+      { id: 7, title: "Horóscopo", description: "Un segmento de astrología con un pronóstico semanal que utiliza descripciones ambiguas y generales (Efecto Forer).", videoUrl: "https://www.youtube.com/embed/vhKto-GTwWE" },
+      { id: 8, title: "Aprendizaje por observación", description: "Un video inmersivo tipo ASMR donde se muestra cómo hacer scones exclusivamente mediante imitación visual, sin narración.", videoUrl: "https://www.youtube.com/embed/9yNfnL195SI" },
+      { id: 9, title: "Marketing científico", description: "Un comercial que apela a la falacia de autoridad, utilizando la estadística de 'recomendada por odontólogos' para legitimar la compra.", videoUrl: "https://www.youtube.com/embed/ZCWLCjlgNGc" },
+      { id: 10, title: "Influencer", description: "Un creador de contenido enumera beneficios de salud en un video corto, respaldándose en su autoridad social en la plataforma.", videoUrl: "https://www.youtube.com/embed/9sml5adxGgE" }
     ];
 
     const appState = { currentIndex: 0, responses: {}, groupName: '', course: '' };
     let myChart = null;
 
-    // Utilidades
     function showToast(msg, isError = false) {
       const toast = document.getElementById('appToast');
       toast.textContent = msg;
@@ -330,7 +328,6 @@
       document.getElementById('answeredCount').textContent = `${Object.keys(appState.responses).length}/${CASES.length}`;
     }
 
-    // Inicializar
     document.getElementById('startBtn').addEventListener('click', () => {
       appState.groupName = document.getElementById('groupNameInput').value || 'Sin nombre';
       appState.course = document.getElementById('courseInput').value || '';
@@ -340,7 +337,6 @@
       renderCase();
     });
 
-    // Guardar selección
     document.querySelectorAll('.classification-btn, .confidence-btn').forEach(btn => {
       btn.addEventListener('click', (e) => {
         const cId = CASES[appState.currentIndex].id;
@@ -357,7 +353,6 @@
       appState.responses[cId].justification = e.target.value;
     });
 
-    // Navegación
     document.getElementById('prevBtn').addEventListener('click', () => {
       if (appState.currentIndex > 0) { appState.currentIndex--; renderCase(); }
     });
@@ -376,8 +371,6 @@
         generarPantallaReporte();
       }
     });
-
-    // --- LÓGICA DE REPORTE Y PDF ---
 
     function generarPantallaReporte() {
       document.getElementById('gameScreen').classList.remove('visible');
@@ -401,15 +394,10 @@
             borderWidth: 0
           }]
         },
-        options: {
-          plugins: {
-            legend: { labels: { color: '#eef3fb', font: { family: 'Inter', size: 14 } } }
-          }
-        }
+        options: { plugins: { legend: { labels: { color: '#eef3fb', font: { family: 'Inter', size: 14 } } } } }
       });
     }
 
-    // Activar Modal de Descarga
     document.getElementById('triggerDownloadBtn').addEventListener('click', () => {
       document.getElementById('nameModal').classList.add('visible');
     });
@@ -418,7 +406,6 @@
       document.getElementById('nameModal').classList.remove('visible');
     });
 
-    // Confirmar y compilar PDF
     document.getElementById('confirmDownloadBtn').addEventListener('click', () => {
       const integrantes = document.getElementById('integrantesInput').value;
       if(!integrantes.trim()) {
@@ -426,7 +413,7 @@
         return;
       }
 
-      // 1. Cargar datos en la plantilla HTML
+      // Preparar datos texto
       document.getElementById('pdfGroupName').textContent = appState.groupName;
       document.getElementById('pdfCourse').textContent = appState.course;
       document.getElementById('pdfIntegrantes').textContent = integrantes;
@@ -434,19 +421,17 @@
       const hoy = new Date();
       document.getElementById('pdfDate').textContent = hoy.toLocaleDateString('es-AR');
 
-      // 2. Pasar el gráfico a formato imagen para el PDF (cambiando color de letra a negro)
+      // Gráfico
       const originalBg = myChart.config.options.plugins.legend.labels.color;
       myChart.config.options.plugins.legend.labels.color = '#1f2937'; 
       myChart.update();
       
       setTimeout(() => {
         document.getElementById('pdfChartImg').src = myChart.toBase64Image();
-        
-        // Volver gráfico al color oscuro de la app
         myChart.config.options.plugins.legend.labels.color = originalBg;
         myChart.update();
 
-        // 3. Renderizar las respuestas caso por caso
+        // Limpiar lista de casos
         const listDiv = document.getElementById('pdfAnswersList');
         listDiv.innerHTML = '';
 
@@ -456,19 +441,18 @@
 
           let badgeClass = res.classification;
           let labelStr = badgeClass === 'fuente' ? 'FUENTE' : (badgeClass === 'humo' ? 'HUMO' : 'REVISAR');
-          
-          let badgeColor = '#92400e'; let badgeBg = '#fef3c7'; // Defaults to Revisar
+          let badgeColor = '#92400e'; let badgeBg = '#fef3c7'; 
           if(badgeClass === 'fuente') { badgeColor = '#065f46'; badgeBg = '#d1fae5'; }
           else if(badgeClass === 'humo') { badgeColor = '#991b1b'; badgeBg = '#fee2e2'; }
 
           const div = document.createElement('div');
-          // HTML inyectado con CSS inline para garantizar que el PDF lo lea bien
+          // ATENCIÓN ACÁ: page-break-inside: avoid soluciona que los casos no se corten por la mitad entre hojas
           div.innerHTML = `
-            <div style="margin-bottom: 25px; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; page-break-inside: avoid;">
-              <h3 style="margin: 0 0 8px 0; font-size: 16px; color: #111827;">Caso ${index + 1}: ${c.title}</h3>
-              <p style="font-size: 13px; color: #4b5563; margin-bottom: 12px;"><em>${c.description}</em></p>
+            <div style="margin-bottom: 20px; padding: 15px; border: 1px solid #e5e7eb; border-radius: 8px; page-break-inside: avoid; break-inside: avoid;">
+              <h3 style="margin: 0 0 5px 0; font-size: 16px; color: #111827;">Caso ${index + 1}: ${c.title}</h3>
+              <p style="font-size: 13px; color: #4b5563; margin-bottom: 10px; margin-top: 0;"><em>${c.description}</em></p>
               
-              <div style="margin-bottom: 12px;">
+              <div style="margin-bottom: 10px;">
                 <span style="display: inline-block; padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; margin-right: 10px; color: ${badgeColor}; background: ${badgeBg};">${labelStr}</span>
                 <span style="font-size: 13px; color: #4b5563;"><strong>Seguridad:</strong> ${res.confidence}/5</span>
               </div>
@@ -479,42 +463,37 @@
           listDiv.appendChild(div);
         });
 
-        // Ocultar modal e indicar carga
         document.getElementById('nameModal').classList.remove('visible');
         document.getElementById('triggerDownloadBtn').textContent = "Generando PDF...";
         document.getElementById('triggerDownloadBtn').disabled = true;
 
-        // 4. Estrategia anti PDF-en-blanco: Hacer visible el contenedor escondiéndolo con z-index
+        // Revelar contenedor sin desplazar el scroll visualmente
         const wrapper = document.getElementById('pdfWrapper');
-        wrapper.style.height = 'auto'; 
-        wrapper.style.position = 'absolute'; 
-        wrapper.style.top = '0';
-        wrapper.style.zIndex = '-100'; 
+        wrapper.style.left = '0';
+        wrapper.style.zIndex = '-100';
 
-        // 5. Configurar y generar PDF
+        // Configuraciones CLAVES para el PDF: scrollY:0 evita espacios en blanco arriba, pagebreak: {mode: 'css'} evita el corte del Caso 6
         const element = document.getElementById('pdfTemplate');
         const opt = {
           margin: 15,
           filename: `Informe_Fuente_o_Humo_${appState.groupName.replace(/\s+/g, '_')}.pdf`,
           image: { type: 'jpeg', quality: 0.98 },
-          html2canvas: { scale: 2, useCORS: true },
-          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
+          html2canvas: { scale: 2, useCORS: true, scrollY: 0, windowWidth: 800 },
+          jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+          pagebreak: { mode: ['css', 'legacy'] }
         };
 
         html2pdf().set(opt).from(element).save().then(() => {
-          // Revertir contenedor oculto
-          wrapper.style.height = '0';
-          wrapper.style.position = 'static';
+          // Volver a esconder
+          wrapper.style.left = '-9999px';
           wrapper.style.zIndex = 'auto';
 
           document.getElementById('triggerDownloadBtn').textContent = "Descargar PDF para entregar";
           document.getElementById('triggerDownloadBtn').disabled = false;
-          
-          // Mensaje exacto de éxito
           showToast("Entregar en Classroom");
         });
 
-      }, 400); // Tiempo prudencial para que el gráfico Canvas actualice colores
+      }, 400);
     });
 
   </script>
