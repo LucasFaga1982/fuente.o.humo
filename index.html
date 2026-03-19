@@ -29,594 +29,123 @@
     html, body { margin: 0; padding: 0; font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; color: var(--text); background: radial-gradient(circle at top, #163154 0%, #0b1526 45%, #08101d 100%); min-height: 100%; }
     button, input, select, textarea { font: inherit; }
     button { cursor: pointer; border: 0; }
-    input, select, textarea {
-      width: 100%;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      color: var(--text);
-      border-radius: 14px;
-      padding: 0.9rem 1rem;
-      outline: none;
-      transition: border-color .2s ease, transform .2s ease, background .2s ease;
-    }
+    input, select, textarea { width: 100%; border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--text); border-radius: 14px; padding: 0.9rem 1rem; outline: none; transition: border-color .2s ease, transform .2s ease, background .2s ease; }
     textarea { min-height: 90px; resize: vertical; }
     input:focus, select:focus, textarea:focus { border-color: var(--brand); background: rgba(255,255,255,0.08); }
     a { color: inherit; }
 
-    body::before,
-    body::after {
-      content: "";
-      position: fixed;
-      inset: auto;
-      width: 380px;
-      height: 380px;
-      border-radius: 50%;
-      filter: blur(70px);
-      z-index: -1;
-      opacity: .35;
-      pointer-events: none;
-    }
+    body::before, body::after { content: ""; position: fixed; inset: auto; width: 380px; height: 380px; border-radius: 50%; filter: blur(70px); z-index: -1; opacity: .35; pointer-events: none; }
     body::before { top: -80px; left: -80px; background: #2d75c9; }
     body::after { right: -120px; bottom: -120px; background: #ff8a5c; }
 
-    .app-shell {
-      width: min(var(--max), calc(100% - 2rem));
-      margin: 1.2rem auto 2rem;
-      display: grid;
-      grid-template-columns: 330px minmax(0, 1fr);
-      gap: 1rem;
-    }
-
-    .panel {
-      background: var(--panel);
-      border: 1px solid var(--line);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(14px);
-    }
-
-    .sidebar {
-      padding: 1.2rem;
-      position: sticky;
-      top: 1rem;
-      height: fit-content;
-    }
-
-    .logo-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .55rem;
-      padding: 0.55rem 0.8rem;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.12);
-      font-size: .85rem;
-      color: var(--cream);
-      margin-bottom: 1rem;
-    }
-
-    .logo-icon {
-      width: 28px;
-      height: 28px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(140,201,255,0.25), rgba(246,196,91,0.18));
-      font-size: 1rem;
-    }
-
+    .app-shell { width: min(var(--max), calc(100% - 2rem)); margin: 1.2rem auto 2rem; display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 1rem; }
+    .panel { background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); backdrop-filter: blur(14px); }
+    .sidebar { padding: 1.2rem; position: sticky; top: 1rem; height: fit-content; }
+    .logo-badge { display: inline-flex; align-items: center; gap: .55rem; padding: 0.55rem 0.8rem; border-radius: 999px; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); font-size: .85rem; color: var(--cream); margin-bottom: 1rem; }
+    .logo-icon { width: 28px; height: 28px; display: grid; place-items: center; border-radius: 50%; background: linear-gradient(135deg, rgba(140,201,255,0.25), rgba(246,196,91,0.18)); font-size: 1rem; }
     h1, h2, h3, h4, p { margin: 0; }
     .brand-title { font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1; letter-spacing: -0.04em; margin-bottom: .6rem; }
     .brand-copy { color: var(--muted); line-height: 1.5; margin-bottom: 1rem; }
-
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: .7rem;
-      margin: 1rem 0 1.1rem;
-    }
-
-    .stat-card {
-      padding: .85rem;
-      border-radius: 18px;
-      background: rgba(255,255,255,0.045);
-      border: 1px solid var(--line);
-    }
-    .stat-card strong {
-      display: block;
-      font-size: 1.25rem;
-      margin-top: .2rem;
-    }
+    
+    .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: .7rem; margin: 1rem 0 1.1rem; }
+    .stat-card { padding: .85rem; border-radius: 18px; background: rgba(255,255,255,0.045); border: 1px solid var(--line); }
+    .stat-card strong { display: block; font-size: 1.25rem; margin-top: .2rem; }
     .stat-card small { color: var(--muted); }
 
-    .quick-actions,
-    .filters,
-    .saved-groups,
-    .teacher-tools { display: grid; gap: .65rem; }
-    .section-label {
-      color: var(--cream);
-      font-size: .82rem;
-      letter-spacing: .1em;
-      text-transform: uppercase;
-      margin: 1rem 0 .5rem;
-      opacity: .9;
-    }
+    .quick-actions, .filters, .saved-groups, .teacher-tools { display: grid; gap: .65rem; }
+    .section-label { color: var(--cream); font-size: .82rem; letter-spacing: .1em; text-transform: uppercase; margin: 1rem 0 .5rem; opacity: .9; }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      padding: .92rem 1rem;
-      border-radius: 16px;
-      font-weight: 700;
-      transition: transform .18s ease, opacity .18s ease, background .18s ease, border-color .18s ease;
-      border: 1px solid transparent;
-      text-align: center;
-    }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: .5rem; padding: .92rem 1rem; border-radius: 16px; font-weight: 700; transition: transform .18s ease, opacity .18s ease, background .18s ease, border-color .18s ease; border: 1px solid transparent; text-align: center; }
     .btn:hover { transform: translateY(-1px); }
     .btn:disabled { opacity: .45; cursor: not-allowed; transform: none; }
     .btn-primary { background: linear-gradient(135deg, var(--brand), var(--brand-2)); color: #052340; }
     .btn-secondary { background: rgba(255,255,255,0.055); color: var(--text); border-color: var(--line); }
     .btn-ghost { background: transparent; color: var(--muted); border-color: var(--line); }
-    .btn-fuente { background: rgba(43,182,115,0.16); color: #c8ffe2; border-color: rgba(43,182,115,0.35); }
-    .btn-humo { background: rgba(239,107,107,0.12); color: #ffd4d4; border-color: rgba(239,107,107,0.3); }
-    .btn-revisar { background: rgba(246,196,91,0.13); color: #fff0c7; border-color: rgba(246,196,91,0.3); }
 
-    .main {
-      padding: 1.15rem;
-      min-height: calc(100vh - 4rem);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
-    .hero {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: flex-start;
-      padding: 1.1rem 1.1rem 0;
-    }
-
+    .main { padding: 1.15rem; min-height: calc(100vh - 4rem); display: flex; flex-direction: column; gap: 1rem; }
+    .hero { display: flex; justify-content: space-between; gap: 1rem; align-items: flex-start; padding: 1.1rem 1.1rem 0; }
     .hero-copy { max-width: 820px; }
     .hero-copy p { color: var(--muted); margin-top: .5rem; line-height: 1.5; }
+    .status-pill { display: inline-flex; align-items: center; gap: .45rem; padding: .55rem .8rem; border-radius: 999px; font-size: .84rem; border: 1px solid var(--line); background: rgba(255,255,255,0.04); color: var(--cream); }
 
-    .status-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: .45rem;
-      padding: .55rem .8rem;
-      border-radius: 999px;
-      font-size: .84rem;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      color: var(--cream);
+    .progress-wrap { padding: 0 1.1rem 1rem; display: grid; gap: .65rem; }
+    .progress-bar { height: 12px; background: rgba(255,255,255,0.08); border-radius: 999px; overflow: hidden; border: 1px solid rgba(255,255,255,0.08); }
+    .progress-fill { height: 100%; width: 0%; border-radius: inherit; background: linear-gradient(90deg, var(--brand), var(--revisar)); transition: width .35s ease; }
+
+    .workspace { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr); gap: 1rem; padding: 0 1.1rem 1.1rem; }
+    .card, .decision-panel, .summary-panel { background: rgba(255,255,255,0.045); border: 1px solid var(--line); border-radius: 24px; }
+    
+    .card { padding: 1.15rem; display: grid; gap: .95rem; min-height: 100%; }
+    .case-title { font-size: clamp(1.45rem, 2vw, 2rem); letter-spacing: -0.03em; margin-bottom: 0.5rem;}
+    
+    /* Contenedor Responsive para Videos */
+    .video-container {
+        position: relative;
+        padding-bottom: 56.25%; /* Relación de aspecto 16:9 */
+        height: 0;
+        overflow: hidden;
+        border-radius: 16px;
+        margin-top: 1rem;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        border: 1px solid rgba(255,255,255,0.08);
+    }
+    .video-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
     }
 
-    .progress-wrap {
-      padding: 0 1.1rem 1rem;
-      display: grid;
-      gap: .65rem;
-    }
+    .case-content { padding: 1.1rem; border-radius: 22px; background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03)); border: 1px solid rgba(255,255,255,0.08); line-height: 1.65; font-size: 1.02rem; color: #f2f6fd; }
 
-    .progress-bar {
-      height: 12px;
-      background: rgba(255,255,255,0.08);
-      border-radius: 999px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .progress-fill {
-      height: 100%;
-      width: 0%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--brand), var(--revisar));
-      transition: width .35s ease;
-    }
-
-    .workspace {
-      display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.95fr);
-      gap: 1rem;
-      padding: 0 1.1rem 1.1rem;
-    }
-
-    .card,
-    .decision-panel,
-    .summary-panel,
-    .saved-card {
-      background: rgba(255,255,255,0.045);
-      border: 1px solid var(--line);
-      border-radius: 24px;
-    }
-
-    .card {
-      padding: 1.15rem;
-      display: grid;
-      gap: .95rem;
-      min-height: 100%;
-    }
-
-    .case-top {
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    .case-number {
-      display: inline-flex;
-      align-items: center;
-      gap: .6rem;
-      padding: .45rem .7rem;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.06);
-      color: var(--cream);
-      font-size: .85rem;
-      border: 1px solid var(--line);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: .45rem;
-      padding: .45rem .7rem;
-      border-radius: 999px;
-      font-size: .8rem;
-      background: rgba(140,201,255,0.12);
-      border: 1px solid rgba(140,201,255,0.22);
-      color: #d6ecff;
-    }
-
-    .case-title { font-size: clamp(1.45rem, 2vw, 2rem); letter-spacing: -0.03em; }
-    .case-content {
-      padding: 1.1rem;
-      border-radius: 22px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.03));
-      border: 1px solid rgba(255,255,255,0.08);
-      line-height: 1.65;
-      font-size: 1.02rem;
-      color: #f2f6fd;
-      white-space: pre-line;
-    }
-
-    .case-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .65rem;
-    }
-
-    .meta-chip {
-      padding: .55rem .75rem;
-      border-radius: 999px;
-      font-size: .84rem;
-      color: var(--muted);
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--line);
-    }
-
-    .hint-box {
-      background: rgba(246,196,91,0.12);
-      border: 1px solid rgba(246,196,91,0.28);
-      border-radius: 18px;
-      padding: 1rem;
-      display: none;
-      gap: .5rem;
-      color: #fff3d2;
-    }
-    .hint-box.visible { display: grid; }
-    .hint-box strong { color: #fff8e6; }
-
-    .decision-panel {
-      padding: 1rem;
-      display: grid;
-      gap: .95rem;
-      align-content: start;
-    }
-
-    .decision-title {
-      font-size: 1.15rem;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: .6rem;
-    }
-
-    .classification-grid,
-    .confidence-grid,
-    .choice-grid {
-      display: grid;
-      gap: .65rem;
-    }
-
+    .decision-panel { padding: 1rem; display: grid; gap: .95rem; align-content: start; }
+    .classification-grid, .confidence-grid { display: grid; gap: .65rem; }
     .classification-grid { grid-template-columns: repeat(3, 1fr); }
     .confidence-grid { grid-template-columns: repeat(5, 1fr); }
-    .choice-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
 
-    .choice-btn,
-    .confidence-btn,
-    .classification-btn {
-      padding: .85rem .8rem;
-      border-radius: 16px;
-      border: 1px solid var(--line);
-      color: var(--text);
-      background: rgba(255,255,255,0.04);
-      font-weight: 650;
-      min-height: 56px;
-      transition: transform .18s ease, background .18s ease, border-color .18s ease, box-shadow .18s ease;
-    }
-
-    .choice-btn.active,
-    .confidence-btn.active,
-    .classification-btn.active {
-      border-color: rgba(255,255,255,0.3);
-      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.09), 0 10px 24px rgba(0,0,0,.18);
-      transform: translateY(-1px);
-    }
-
+    .classification-btn, .confidence-btn { padding: .85rem .4rem; border-radius: 16px; border: 1px solid var(--line); color: var(--text); background: rgba(255,255,255,0.04); font-weight: 650; min-height: 56px; transition: transform .18s ease, background .18s ease; font-size: 0.9rem;}
+    
+    .classification-btn.active, .confidence-btn.active { border-color: rgba(255,255,255,0.3); transform: translateY(-1px); }
     .classification-btn[data-value="fuente"].active { background: rgba(43,182,115,0.16); color: #d7ffea; border-color: rgba(43,182,115,0.42); }
     .classification-btn[data-value="humo"].active { background: rgba(239,107,107,0.14); color: #ffe2e2; border-color: rgba(239,107,107,0.38); }
     .classification-btn[data-value="revisar"].active { background: rgba(246,196,91,0.15); color: #fff3d0; border-color: rgba(246,196,91,0.42); }
-    .choice-btn.active, .confidence-btn.active { background: rgba(140,201,255,0.15); color: #e5f4ff; border-color: rgba(140,201,255,0.42); }
+    .confidence-btn.active { background: rgba(140,201,255,0.15); color: #e5f4ff; border-color: rgba(140,201,255,0.42); }
 
-    .helper {
-      font-size: .86rem;
-      color: var(--muted);
-      line-height: 1.45;
-      margin-top: -.2rem;
-    }
-
-    .field-grid { display: grid; gap: .9rem; }
-    .field-grid.two { grid-template-columns: repeat(2, minmax(0,1fr)); }
-    .field-label {
-      display: block;
-      font-size: .92rem;
-      color: var(--cream);
-      margin-bottom: .45rem;
-    }
-
-    .inline-row {
-      display: flex;
-      gap: .7rem;
-      flex-wrap: wrap;
-    }
-
-    .alert {
-      padding: .85rem 1rem;
-      border-radius: 16px;
-      border: 1px solid rgba(239,107,107,0.28);
-      background: rgba(239,107,107,0.1);
-      color: #ffd8d8;
-      font-size: .92rem;
-      display: none;
-    }
+    .alert { padding: .85rem 1rem; border-radius: 16px; border: 1px solid rgba(239,107,107,0.28); background: rgba(239,107,107,0.1); color: #ffd8d8; font-size: .92rem; display: none; }
     .alert.visible { display: block; }
 
-    .nav-row {
-      display: flex;
-      gap: .75rem;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .mini-links {
-      display: flex;
-      gap: .6rem;
-      flex-wrap: wrap;
-    }
-
-    .summary-panel {
-      padding: 1rem;
-      display: none;
-      gap: 1rem;
-    }
-    .summary-panel.visible { display: grid; }
-
-    .summary-grid,
-    .classroom-grid { display: grid; gap: .9rem; }
-    .summary-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
-
-    .summary-card {
-      padding: 1rem;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-    }
-    .summary-card h4 { margin-bottom: .4rem; }
-    .summary-card p { color: var(--muted); line-height: 1.45; }
-
-    .list-box {
-      padding: 1rem;
-      border-radius: 20px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.04);
-      display: grid;
-      gap: .8rem;
-    }
-
-    .case-list-item,
-    .saved-group-item,
-    .agreement-item {
-      padding: .95rem;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.09);
-      background: rgba(255,255,255,0.035);
-      display: grid;
-      gap: .55rem;
-    }
-
-    .saved-group-item header,
-    .agreement-item header,
-    .case-list-item header {
-      display: flex;
-      justify-content: space-between;
-      gap: .8rem;
-      align-items: flex-start;
-      flex-wrap: wrap;
-    }
-
-    .tag-row { display: flex; gap: .5rem; flex-wrap: wrap; }
-    .tag {
-      padding: .4rem .65rem;
-      border-radius: 999px;
-      font-size: .78rem;
-      border: 1px solid var(--line);
-      color: var(--muted);
-    }
-    .tag.fuente { color: #d7ffea; border-color: rgba(43,182,115,.35); background: rgba(43,182,115,.12); }
-    .tag.humo { color: #ffdede; border-color: rgba(239,107,107,.32); background: rgba(239,107,107,.1); }
-    .tag.revisar { color: #fff3d0; border-color: rgba(246,196,91,.34); background: rgba(246,196,91,.11); }
-
-    .bar-stack {
-      display: grid;
-      gap: .35rem;
-    }
-    .bar-track {
-      height: 12px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 999px;
-      overflow: hidden;
-      display: flex;
-    }
-    .bar-segment { height: 100%; }
-    .bar-segment.fuente { background: var(--fuente); }
-    .bar-segment.humo { background: var(--humo); }
-    .bar-segment.revisar { background: var(--revisar); }
-
-    .muted { color: var(--muted); }
-    .small { font-size: .9rem; }
-    .xsmall { font-size: .82rem; }
-
-    .hero-actions {
-      display: flex;
-      flex-wrap: wrap;
-      gap: .65rem;
-    }
+    .nav-row { display: flex; gap: .75rem; flex-wrap: wrap; justify-content: space-between; align-items: center; margin-top: 1rem;}
 
     .screen { display: none; }
     .screen.visible { display: block; }
+    .start-screen { min-height: calc(100vh - 2.4rem); display: grid; place-items: center; }
+    .start-card { width: min(980px, calc(100% - 2rem)); padding: 1.2rem; display: grid; grid-template-columns: 1.1fr .9fr; gap: 1rem; }
 
-    .start-screen {
-      min-height: calc(100vh - 2.4rem);
-      display: grid;
-      place-items: center;
-    }
-
-    .start-card {
-      width: min(980px, calc(100% - 2rem));
-      padding: 1.2rem;
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 1rem;
-    }
-
-    .poster {
-      padding: 1.4rem;
-      border-radius: 28px;
-      border: 1px solid var(--line);
-      background:
-        radial-gradient(circle at top left, rgba(140,201,255,0.22), transparent 40%),
-        radial-gradient(circle at bottom right, rgba(246,196,91,0.22), transparent 38%),
-        rgba(255,255,255,0.035);
-      display: grid;
-      gap: 1rem;
-      min-height: 100%;
-    }
-
+    .poster { padding: 1.4rem; border-radius: 28px; border: 1px solid var(--line); background: radial-gradient(circle at top left, rgba(140,201,255,0.22), transparent 40%), radial-gradient(circle at bottom right, rgba(246,196,91,0.22), transparent 38%), rgba(255,255,255,0.035); display: grid; gap: 1rem; min-height: 100%; }
     .poster h1 { font-size: clamp(2.8rem, 7vw, 5rem); letter-spacing: -0.06em; line-height: .92; }
     .poster p { color: var(--muted); font-size: 1.05rem; line-height: 1.6; }
+    
+    .setup-card { padding: 1.25rem; border-radius: 28px; border: 1px solid var(--line); background: rgba(255,255,255,0.045); display: grid; gap: .95rem; align-content: start; }
+    .field-grid.two { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: .9rem;}
+    .field-label { display: block; font-size: .92rem; color: var(--cream); margin-bottom: .45rem; }
 
-    .poster-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: .8rem;
-    }
-
-    .poster-block {
-      padding: .9rem;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.05);
-      border: 1px solid var(--line);
-    }
-    .poster-block strong { display: block; margin-bottom: .3rem; }
-    .poster-block small { color: var(--muted); line-height: 1.45; }
-
-    .setup-card {
-      padding: 1.25rem;
-      border-radius: 28px;
-      border: 1px solid var(--line);
-      background: rgba(255,255,255,0.045);
-      display: grid;
-      gap: .95rem;
-      align-content: start;
-    }
-
-    .help-list {
-      display: grid;
-      gap: .55rem;
-      color: var(--muted);
-      line-height: 1.5;
-      font-size: .95rem;
-    }
-
-    .toast {
-      position: fixed;
-      right: 1rem;
-      bottom: 1rem;
-      padding: .9rem 1rem;
-      border-radius: 18px;
-      background: rgba(11, 21, 38, 0.92);
-      border: 1px solid var(--line);
-      box-shadow: var(--shadow);
-      display: none;
-      max-width: 360px;
-      z-index: 20;
-    }
+    .toast { position: fixed; right: 1rem; bottom: 1rem; padding: .9rem 1rem; border-radius: 18px; background: rgba(11, 21, 38, 0.92); border: 1px solid var(--line); box-shadow: var(--shadow); display: none; max-width: 360px; z-index: 20; color: #fff;}
     .toast.visible { display: block; }
 
-    .hidden { display: none !important; }
-
-    @media (max-width: 1100px) {
-      .app-shell,
-      .start-card,
-      .workspace { grid-template-columns: 1fr; }
-      .sidebar { position: static; }
-    }
-
+    @media (max-width: 1100px) { .app-shell, .start-card, .workspace { grid-template-columns: 1fr; } .sidebar { position: static; } }
     @media (max-width: 760px) {
       .app-shell { width: min(100%, calc(100% - 1rem)); margin: .5rem auto 1rem; }
       .main, .sidebar { padding: 1rem; }
-      .classification-grid,
-      .confidence-grid,
-      .choice-grid,
-      .field-grid.two,
-      .summary-grid,
-      .stats-grid,
-      .poster-grid { grid-template-columns: 1fr; }
-      .hero { padding: 1rem 1rem 0; }
-      .progress-wrap,
-      .workspace { padding: 0 1rem 1rem; }
-      .case-title { font-size: 1.4rem; }
+      .classification-grid { grid-template-columns: 1fr; }
+      .confidence-grid { grid-template-columns: repeat(5, 1fr); }
+      .field-grid.two { grid-template-columns: 1fr; }
       .poster h1 { font-size: 3rem; }
-    }
-
-    @media print {
-      body { background: white; color: #0f172a; }
-      body::before, body::after, .sidebar, .hero-actions, .mini-links, .decision-panel, .toast, #startScreen { display: none !important; }
-      .app-shell { display: block; width: 100%; margin: 0; }
-      .main, .panel { background: white; box-shadow: none; border: 0; }
-      .summary-panel, .screen.visible, .summary-panel.visible { display: block !important; }
-      .summary-card, .list-box, .case-list-item, .agreement-item { break-inside: avoid; border: 1px solid #d8dee9; }
-      .muted, .summary-card p, .brand-copy, .hero-copy p { color: #334155 !important; }
     }
   </style>
 </head>
 <body>
+
   <div class="screen visible start-screen" id="startScreen">
     <section class="start-card panel">
       <div class="poster">
@@ -625,53 +154,28 @@
           <h1>FUENTE<br>O HUMO</h1>
           <p>No todo lo que circula con seguridad tiene fundamento. No todo lo que parece raro es falso. Esta app ayuda a discutir en qué saber confiar, qué poner en duda y qué conviene revisar mejor.</p>
         </div>
-        <div class="poster-grid">
-          <div class="poster-block">
-            <strong>Fuente</strong>
-            <small>Saber en el que confiaría, con razones.</small>
-          </div>
-          <div class="poster-block">
-            <strong>Humo</strong>
-            <small>Saber que pondría en duda o que suena convincente sin sostén claro.</small>
-          </div>
-          <div class="poster-block">
-            <strong>Revisar mejor</strong>
-            <small>Saber que requiere más datos, contexto o evidencia antes de decidir.</small>
-          </div>
-        </div>
       </div>
-
       <div class="setup-card">
         <div>
           <h2 style="font-size:1.5rem; margin-bottom:.4rem;">Preparar grupo</h2>
-          <p class="brand-copy">Ideal para Filosofía, Construcción de Ciudadanía, Ciencias, formación docente o cualquier clase donde quieras trabajar criterios de confianza.</p>
+          <p class="brand-copy">Ideal para Filosofía, Historia de la Ciencia, Construcción de Ciudadanía o cualquier clase donde quieras trabajar criterios de verdad.</p>
         </div>
-
         <div class="field-grid two">
           <div>
-            <label class="field-label" for="groupNameInput">Nombre del grupo</label>
-            <input id="groupNameInput" type="text" placeholder="Ejemplo: Grupo 3" maxlength="50">
+            <label class="field-label" for="groupNameInput">Nombre del estudiante / grupo</label>
+            <input id="groupNameInput" type="text" placeholder="Ej: Grupo 3 o Tu Nombre" maxlength="50">
           </div>
           <div>
             <label class="field-label" for="courseInput">Curso / comisión</label>
-            <input id="courseInput" type="text" placeholder="Ejemplo: 5° A" maxlength="50">
+            <input id="courseInput" type="text" placeholder="Ejemplo: 6° A" maxlength="50">
           </div>
         </div>
-
         <div>
-          <label class="field-label" for="teacherInput">Docente o institución (opcional)</label>
+          <label class="field-label" for="teacherInput">Institución / Proyecto</label>
           <input id="teacherInput" type="text" placeholder="Ejemplo: Docentes Brown / Filosofía" maxlength="80">
         </div>
-
-        <div class="help-list">
-          <div>• La app guarda los resultados en este dispositivo para poder comparar varios grupos.</div>
-          <div>• Cada caso pide clasificar, justificar y marcar el nivel de confianza.</div>
-          <div>• Al final podés imprimir el informe o abrir un tablero de aula con acuerdos y desacuerdos.</div>
-        </div>
-
-        <div class="inline-row">
-          <button class="btn btn-primary" id="startBtn">Empezar partida</button>
-          <button class="btn btn-secondary" id="openDashboardBtn">Ver tablero de aula</button>
+        <div style="margin-top: 1rem;">
+          <button class="btn btn-primary" id="startBtn" style="width: 100%;">Empezar partida</button>
         </div>
       </div>
     </section>
@@ -683,41 +187,20 @@
         <div class="logo-badge"><span class="logo-icon">🧪</span> Evaluar saberes en circulación</div>
         <h2 class="brand-title">Fuente o Humo</h2>
         <p class="brand-copy">Pensar no es creer o desconfiar por reflejo. Pensar es revisar quién habla, en qué se apoya y qué riesgo hay si actuamos según eso.</p>
-
+        
         <div class="stats-grid">
           <div class="stat-card">
-            <small>Respondidos</small>
+            <small>Progreso</small>
             <strong id="answeredCount">0/10</strong>
           </div>
           <div class="stat-card">
-            <small>Grupo</small>
+            <small>Estudiante</small>
             <strong id="groupNameStat">—</strong>
           </div>
-          <div class="stat-card">
-            <small>Modo</small>
-            <strong>Clase</strong>
-          </div>
         </div>
 
-        <div class="filters">
-          <label class="field-label" for="caseSelector">Ir a un caso</label>
-          <select id="caseSelector"></select>
-        </div>
-
-        <div class="section-label">Atajos</div>
-        <div class="quick-actions">
-          <button class="btn btn-secondary" id="hintBtn">Mostrar pista para revisar mejor</button>
-          <button class="btn btn-secondary" id="saveProgressBtn">Guardar progreso local</button>
+        <div class="quick-actions" style="margin-top: 2rem;">
           <button class="btn btn-ghost" id="backToStartBtn">Volver al inicio</button>
-        </div>
-
-        <div class="section-label">Resultados guardados</div>
-        <div class="saved-groups" id="savedGroupsList"></div>
-
-        <div class="section-label">Herramientas docentes</div>
-        <div class="teacher-tools">
-          <button class="btn btn-secondary" id="teacherBoardBtn">Abrir tablero de aula</button>
-          <button class="btn btn-ghost" id="clearStorageBtn">Borrar todos los grupos guardados</button>
         </div>
       </aside>
 
@@ -725,908 +208,284 @@
         <div class="hero">
           <div class="hero-copy">
             <div class="status-pill" id="statusPill">Caso 1 de 10</div>
-            <h3 id="heroTitle" style="font-size: 1.55rem; margin-top: .8rem; letter-spacing:-0.03em;">Analizar el caso</h3>
-            <p id="heroCopy">Leé con atención, clasificá con criterio y justificá la decisión. La idea no es adivinar una verdad absoluta, sino entrenar cómo pensamos.</p>
-          </div>
-          <div class="hero-actions">
-            <button class="btn btn-secondary" id="restartCurrentBtn">Limpiar este caso</button>
-            <button class="btn btn-primary" id="finishBtn">Ver informe final</button>
+            <h3 style="font-size: 1.55rem; margin-top: .8rem; letter-spacing:-0.03em;">Analizar el caso</h3>
           </div>
         </div>
 
         <div class="progress-wrap">
           <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
-          <div class="small muted" id="progressText">Todavía no hay decisiones guardadas.</div>
         </div>
 
         <div class="workspace" id="workspace">
-          <section class="card" aria-live="polite">
-            <div class="case-top">
-              <div>
-                <div class="case-number" id="caseNumber">Caso 1</div>
-                <h3 class="case-title" id="caseTitle">—</h3>
-              </div>
-              <div class="badge" id="caseFormat">Formato</div>
-            </div>
-
-            <div class="case-content" id="caseContent">—</div>
-
-            <div class="case-meta" id="caseMeta"></div>
-
-            <div class="hint-box" id="hintBox">
-              <strong>Pista para revisar mejor</strong>
-              <div id="hintText"></div>
+          <section class="card">
+            <div>
+              <h3 class="case-title" id="caseTitle">Título del caso</h3>
+              <div class="case-content" id="caseContent">
+                </div>
             </div>
           </section>
 
           <section class="decision-panel">
-            <div class="decision-title">
-              <span>Tu decisión</span>
-              <span class="xsmall muted" id="decisionStatus">Falta completar</span>
-            </div>
-
-            <div>
-              <label class="field-label">1) ¿Esto te parece fuente, humo o algo para revisar mejor?</label>
-              <div class="classification-grid" id="classificationGrid">
-                <button class="classification-btn" data-value="fuente">Fuente</button>
-                <button class="classification-btn" data-value="humo">Humo</button>
-                <button class="classification-btn" data-value="revisar">Revisar mejor</button>
-              </div>
-              <div class="helper">No se trata de “me gusta / no me gusta”, sino de qué harías con ese saber al momento de decidir.</div>
-            </div>
-
-            <div>
-              <label class="field-label">2) ¿Quién lo dice o desde dónde habla?</label>
-              <div class="choice-grid" id="whoGrid"></div>
-            </div>
-
-            <div>
-              <label class="field-label">3) ¿En qué se apoya principalmente?</label>
-              <div class="choice-grid" id="basisGrid"></div>
-            </div>
-
-            <div class="field-grid two">
-              <div>
-                <label class="field-label" for="riskSelect">4) ¿Qué riesgo habría si actuás según esto y está equivocado?</label>
-                <select id="riskSelect">
-                  <option value="">Elegí una opción</option>
-                  <option value="bajo">Riesgo bajo</option>
-                  <option value="medio">Riesgo medio</option>
-                  <option value="alto">Riesgo alto</option>
-                </select>
-              </div>
-              <div>
-                <label class="field-label" for="confidenceSelect">5) Nivel de confianza</label>
-                <div class="confidence-grid" id="confidenceGrid"></div>
-              </div>
-            </div>
-
-            <div class="field-grid">
-              <div>
-                <label class="field-label" for="missingInfo">6) ¿Qué revisarías mejor antes de decidir?</label>
-                <textarea id="missingInfo" placeholder="Ejemplo: quién lo recomienda, si cita estudios, si tiene intereses comerciales, si el contexto cambia la respuesta..."></textarea>
-              </div>
-              <div>
-                <label class="field-label" for="reasonText">7) Justificación breve del grupo</label>
-                <textarea id="reasonText" placeholder="Explicá por qué lo ubican ahí."></textarea>
-              </div>
-            </div>
-
             <div class="alert" id="validationAlert"></div>
+            
+            <div>
+              <label class="field-label">1. ¿Qué nivel de verdad le asignás a esto?</label>
+              <div class="classification-grid">
+                <button class="classification-btn" data-value="fuente">🟢 ¡Es Fuente!</button>
+                <button class="classification-btn" data-value="humo">🔴 Puro Humo</button>
+                <button class="classification-btn" data-value="revisar">🟡 Depende / Revisar</button>
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <label class="field-label">2. ¿Qué tanta seguridad tenés en tu respuesta? (1 = Dudosa, 5 = Absoluta)</label>
+              <div class="confidence-grid">
+                <button class="confidence-btn" data-value="1">1</button>
+                <button class="confidence-btn" data-value="2">2</button>
+                <button class="confidence-btn" data-value="3">3</button>
+                <button class="confidence-btn" data-value="4">4</button>
+                <button class="confidence-btn" data-value="5">5</button>
+              </div>
+            </div>
+
+            <div style="margin-top: 1rem;">
+              <label class="field-label">3. Justificá tu decisión brevemente:</label>
+              <textarea id="justificationInput" placeholder="Escribí por qué elegiste esa opción..."></textarea>
+            </div>
 
             <div class="nav-row">
-              <div class="mini-links">
-                <button class="btn btn-secondary" id="prevBtn">← Anterior</button>
-                <button class="btn btn-secondary" id="nextBtn">Siguiente →</button>
-              </div>
-              <button class="btn btn-primary" id="saveCaseBtn">Guardar este caso</button>
+              <button class="btn btn-secondary" id="prevBtn">Anterior</button>
+              <button class="btn btn-primary" id="nextBtn">Guardar y Avanzar</button>
             </div>
           </section>
         </div>
-
-        <section class="summary-panel" id="summaryPanel">
-          <div class="summary-grid">
-            <article class="summary-card">
-              <h4>Distribución del grupo</h4>
-              <p id="summaryDistribution">—</p>
-            </article>
-            <article class="summary-card">
-              <h4>Confianza promedio</h4>
-              <p id="summaryConfidence">—</p>
-            </article>
-            <article class="summary-card">
-              <h4>Docente / curso</h4>
-              <p id="summaryContext">—</p>
-            </article>
-          </div>
-
-          <div class="inline-row">
-            <button class="btn btn-primary" id="saveGroupBtn">Guardar grupo en tablero</button>
-            <button class="btn btn-secondary" id="printBtn">Imprimir informe</button>
-            <button class="btn btn-secondary" id="downloadBtn">Descargar JSON</button>
-            <button class="btn btn-ghost" id="closeSummaryBtn">Volver a jugar</button>
-          </div>
-
-          <div class="list-box">
-            <h4>Resumen caso por caso</h4>
-            <div id="caseSummaryList"></div>
-          </div>
-
-          <div class="list-box" id="classroomBoardBox">
-            <h4>Tablero de aula</h4>
-            <div class="small muted">Si hay varios grupos guardados en este dispositivo, acá vas a poder ver acuerdos y desacuerdos por caso.</div>
-            <div class="classroom-grid" id="classroomGrid"></div>
-          </div>
-        </section>
       </main>
     </div>
   </div>
 
-  <div class="toast" id="toast"></div>
+  <div class="toast" id="appToast">Mensaje guardado</div>
 
   <script>
-    const STORAGE_KEY = 'fuente_o_humo_saved_groups_v1';
-    const PROGRESS_KEY = 'fuente_o_humo_progress_v1';
-
+    // LOS 10 CASOS CON YOUTUBE EMBED IFRAMES
     const CASES = [
       {
         id: 1,
-        title: 'Audio familiar: miel y limón',
-        format: 'Audio de WhatsApp',
-        icon: '🎙️',
-        source: 'Consejo cotidiano',
-        riskTag: 'Salud leve',
-        content: '“Tomá miel con limón para el dolor de garganta, eso nunca falla. A mí siempre me sirvió.”',
-        hint: 'Puede aliviar síntomas, pero no reemplaza un diagnóstico. Revisar mejor implica distinguir entre un recurso casero para molestias leves y un tratamiento suficiente frente a una enfermedad concreta.'
+        title: "Audio familiar",
+        description: "Una voz cercana recomienda miel, limón y jengibre para el resfrío. ¿Es un saber tradicional válido o un simple mito?",
+        videoUrl: "https://www.youtube.com/embed/2LX1QpdlsVI"
       },
       {
         id: 2,
-        title: 'Indicación médica de antibióticos',
-        format: 'Receta / indicación profesional',
-        icon: '🩺',
-        source: 'Autoridad profesional',
-        riskTag: 'Salud alta',
-        content: 'Un médico indica: “Debe tomar antibióticos durante 7 días por esta infección bacteriana, siguiendo estas dosis”.',
-        hint: 'No alcanza con que “lo diga un médico”: importa si hubo consulta real, diagnóstico, seguimiento y si la indicación corresponde al caso. Aun así, el tipo de respaldo no es igual al de un testimonio casual.'
+        title: "Receta profesional",
+        description: "Un médico deja una indicación precisa sobre el peligro de automedicarse con antibióticos. ¿Es una verdad absoluta incuestionable?",
+        videoUrl: "https://www.youtube.com/embed/Mxm4OM2t8yI"
       },
       {
         id: 3,
-        title: 'Presentimiento personal',
-        format: 'Relato subjetivo',
-        icon: '🔮',
-        source: 'Intuición',
-        riskTag: 'Depende del uso',
-        content: 'Una persona dice: “Yo siento cuando algo malo va a pasar. Siempre tengo esa energía antes de que ocurra algo”.',
-        hint: 'La app no pregunta si la persona miente, sino qué base tendría ese saber para tomar decisiones compartidas. También vale pensar si el caso cambia cuando se trata de emociones, cuidado o predicción de hechos.'
+        title: "Presentimiento",
+        description: "Alguien 'siente' que algo malo va a pasar y actúa en consecuencia. ¿El conocimiento intuitivo es una fuente confiable?",
+        videoUrl: "https://www.youtube.com/embed/e9Cq9mHzRt0"
       },
       {
         id: 4,
-        title: 'Tutorial para arreglar un enchufe',
-        format: 'Video corto / tutorial',
-        icon: '🛠️',
-        source: 'Internet',
-        riskTag: 'Riesgo material alto',
-        content: 'Un tutorial de internet enseña a “arreglar un enchufe en 3 minutos, sin gastar plata y sin llamar a nadie”.',
-        hint: 'Un tutorial puede ser útil, pero el criterio cambia si hay riesgo físico. Revisar mejor podría implicar verificar quién enseña, si hay advertencias y si la práctica requiere formación específica.'
+        title: "Tutorial exprés",
+        description: "Un video enseña el paso a paso para arreglar un enchufe. No explica teoría eléctrica. ¿El pragmatismo puro es una forma de verdad?",
+        videoUrl: "https://www.youtube.com/embed/N2wv5yqB-Wc"
       },
       {
         id: 5,
-        title: 'Predicción comunitaria de lluvias',
-        format: 'Observación de la naturaleza',
-        icon: '🌧️',
-        source: 'Saber comunitario',
-        riskTag: 'Contextual',
-        content: 'Una comunidad indígena predice lluvias observando cambios en aves, viento, olor del ambiente y comportamiento de ciertas plantas.',
-        hint: 'No todo saber valioso está expresado en lenguaje de laboratorio. Puede haber observación sistemática, experiencia acumulada y criterio contextual, aunque use otros marcos de validación.'
+        title: "Saber comunitario",
+        description: "Comunidades rurales anticipan lluvias observando el comportamiento de las hormigas. Un saber empírico no académico.",
+        videoUrl: "https://www.youtube.com/embed/oFsU_cmvrUA"
       },
       {
         id: 6,
-        title: 'Recomendación algorítmica de consumo',
-        format: 'App / algoritmo',
-        icon: '📱',
-        source: 'Sistema automatizado',
-        riskTag: 'Interés comercial',
-        content: 'Una aplicación recomienda “qué deberías consumir hoy” según tus hábitos, búsquedas y actividad reciente.',
-        hint: 'Que sea “tecnológico” no garantiza neutralidad. Revisar mejor puede incluir: qué datos usa, con qué objetivo, si prioriza salud, publicidad o permanencia en la plataforma.'
+        title: "Recomendación algorítmica",
+        description: "Una máquina procesa tus datos para sugerirte qué consumir. ¿Confiamos hoy más en la autoridad del algoritmo que en nuestro criterio?",
+        videoUrl: "https://www.youtube.com/embed/RSJrBEhdZxw"
       },
       {
         id: 7,
-        title: 'Horóscopo sobre tu personalidad',
-        format: 'Posteo / entretenimiento',
-        icon: '♒',
-        source: 'Astrología',
-        riskTag: 'Riesgo bajo o simbólico',
-        content: '“Sos una persona intensa, sensible y te cuesta soltar. A veces parecés fría, pero sentís todo demasiado”.',
-        hint: 'Puede ser interesante pensar por qué muchas personas sienten que estas frases “encajan”. Revisar mejor no es solo discutir verdad o falsedad, sino cómo operan generalización, ambigüedad y reconocimiento personal.'
+        title: "Horóscopo",
+        description: "Una descripción general parece hablar exactamente de tu vida actual. ¿Es una lectura real o el 'Efecto Forer' en acción?",
+        videoUrl: "https://www.youtube.com/embed/vhKto-GTwWE"
       },
       {
         id: 8,
-        title: 'Aprender mirando a otra persona',
-        format: 'Aprendizaje por observación',
-        icon: '🍳',
-        source: 'Práctica compartida',
-        riskTag: 'Riesgo bajo',
-        content: 'Una persona aprende a cocinar mirando a otra y repitiendo sus movimientos, sin leer recetas ni teoría formal.',
-        hint: 'Acá sirve discutir qué tipo de saber se construye en la práctica. No todo aprendizaje pasa por manuales, pero tampoco toda repetición garantiza comprensión o transferencia a cualquier situación.'
+        title: "Aprendizaje por observación",
+        description: "Aprender a cocinar unos scones solo mirando unas manos amasar (conocimiento mimético), sin ninguna explicación teórica de fondo.",
+        videoUrl: "https://www.youtube.com/embed/9yNfnL195SI"
       },
       {
         id: 9,
-        title: 'Producto “científicamente probado”',
-        format: 'Publicidad de laboratorio',
-        icon: '🧪',
-        source: 'Marketing científico',
-        riskTag: 'Interés comercial alto',
-        content: 'Un laboratorio afirma en su publicidad: “Nuestro producto está científicamente probado”. No muestra el estudio en la pieza publicitaria.',
-        hint: 'La frase suena fuerte, pero revisar mejor supone preguntar: ¿probado cómo?, ¿por quién?, ¿frente a qué comparación?, ¿en qué condiciones?, ¿qué parte comunica la publicidad y cuál omite?' 
+        title: "Marketing científico",
+        description: "Una publicidad antigua afirma que su producto es recomendado por '9 de cada 10 odontólogos' usando falacia de autoridad.",
+        videoUrl: "https://www.youtube.com/embed/ZCWLCjlgNGc"
       },
       {
         id: 10,
-        title: 'Influencer y suplemento milagroso',
-        format: 'Reel / influencer',
-        icon: '💊',
-        source: 'Testimonio digital',
-        riskTag: 'Salud / consumo',
-        content: 'Un influencer recomienda un suplemento “porque funciona”, dice que lo usa hace semanas y deja un link con descuento.',
-        hint: 'El testimonio personal puede ser genuino y aun así no alcanzar como evidencia. Revisar mejor también es mirar si hay patrocinio, conflicto de interés o promesas difíciles de comprobar.'
+        title: "Influencer",
+        description: "Un creador de contenido asegura que tomar magnesio le 'cambió la vida'. ¿La evidencia anecdótica alcanza para establecer una verdad?",
+        videoUrl: "https://www.youtube.com/embed/9sml5adxGgE"
       }
     ];
 
-    const WHO_OPTIONS = [
-      { value: 'profesional', label: 'Profesional o especialista' },
-      { value: 'familiar', label: 'Persona cercana / experiencia cotidiana' },
-      { value: 'influencer', label: 'Influencer o figura pública' },
-      { value: 'algoritmo', label: 'Algoritmo o app' },
-      { value: 'comunidad', label: 'Comunidad / tradición compartida' },
-      { value: 'intuicion', label: 'Intuición o percepción personal' },
-      { value: 'marca', label: 'Marca / laboratorio / empresa' },
-      { value: 'observacion', label: 'Aprendizaje por observación práctica' }
-    ];
-
-    const BASIS_OPTIONS = [
-      { value: 'evidencia', label: 'Evidencia / estudio / procedimiento' },
-      { value: 'experiencia', label: 'Experiencia personal o ajena' },
-      { value: 'tradicion', label: 'Tradición / observación sostenida' },
-      { value: 'autoridad', label: 'Prestigio o autoridad de quien habla' },
-      { value: 'algoritmo', label: 'Datos / algoritmo / recomendación automática' },
-      { value: 'publicidad', label: 'Marketing o persuasión comercial' },
-      { value: 'intuicion', label: 'Intuición / creencia / percepción' },
-      { value: 'incierto', label: 'No queda claro en qué se apoya' }
-    ];
-
-    const CONFIDENCE_OPTIONS = [
-      { value: 1, label: 'Muy baja' },
-      { value: 2, label: 'Baja' },
-      { value: 3, label: 'Media' },
-      { value: 4, label: 'Alta' },
-      { value: 5, label: 'Muy alta' }
-    ];
-
+    // ESTADO DE LA APP
     const appState = {
       currentIndex: 0,
-      groupName: '',
-      course: '',
-      teacher: '',
       responses: {},
-      summaryVisible: false
+      groupName: '',
+      course: ''
     };
 
+    // ELEMENTOS DEL DOM
     const els = {
       startScreen: document.getElementById('startScreen'),
       gameScreen: document.getElementById('gameScreen'),
       startBtn: document.getElementById('startBtn'),
-      openDashboardBtn: document.getElementById('openDashboardBtn'),
+      backToStartBtn: document.getElementById('backToStartBtn'),
       groupNameInput: document.getElementById('groupNameInput'),
       courseInput: document.getElementById('courseInput'),
-      teacherInput: document.getElementById('teacherInput'),
+      
+      caseTitle: document.getElementById('caseTitle'),
+      caseContent: document.getElementById('caseContent'),
+      statusPill: document.getElementById('statusPill'),
+      progressFill: document.getElementById('progressFill'),
       answeredCount: document.getElementById('answeredCount'),
       groupNameStat: document.getElementById('groupNameStat'),
-      caseSelector: document.getElementById('caseSelector'),
-      hintBtn: document.getElementById('hintBtn'),
-      hintBox: document.getElementById('hintBox'),
-      hintText: document.getElementById('hintText'),
-      backToStartBtn: document.getElementById('backToStartBtn'),
-      teacherBoardBtn: document.getElementById('teacherBoardBtn'),
-      clearStorageBtn: document.getElementById('clearStorageBtn'),
-      savedGroupsList: document.getElementById('savedGroupsList'),
-      statusPill: document.getElementById('statusPill'),
-      heroTitle: document.getElementById('heroTitle'),
-      progressFill: document.getElementById('progressFill'),
-      progressText: document.getElementById('progressText'),
-      caseNumber: document.getElementById('caseNumber'),
-      caseTitle: document.getElementById('caseTitle'),
-      caseFormat: document.getElementById('caseFormat'),
-      caseContent: document.getElementById('caseContent'),
-      caseMeta: document.getElementById('caseMeta'),
-      decisionStatus: document.getElementById('decisionStatus'),
-      classificationGrid: document.getElementById('classificationGrid'),
-      whoGrid: document.getElementById('whoGrid'),
-      basisGrid: document.getElementById('basisGrid'),
-      riskSelect: document.getElementById('riskSelect'),
-      confidenceGrid: document.getElementById('confidenceGrid'),
-      missingInfo: document.getElementById('missingInfo'),
-      reasonText: document.getElementById('reasonText'),
-      validationAlert: document.getElementById('validationAlert'),
+      
+      classBtns: document.querySelectorAll('.classification-btn'),
+      confBtns: document.querySelectorAll('.confidence-btn'),
+      justificationInput: document.getElementById('justificationInput'),
+      
       prevBtn: document.getElementById('prevBtn'),
       nextBtn: document.getElementById('nextBtn'),
-      saveCaseBtn: document.getElementById('saveCaseBtn'),
-      finishBtn: document.getElementById('finishBtn'),
-      restartCurrentBtn: document.getElementById('restartCurrentBtn'),
-      saveProgressBtn: document.getElementById('saveProgressBtn'),
-      summaryPanel: document.getElementById('summaryPanel'),
-      summaryDistribution: document.getElementById('summaryDistribution'),
-      summaryConfidence: document.getElementById('summaryConfidence'),
-      summaryContext: document.getElementById('summaryContext'),
-      caseSummaryList: document.getElementById('caseSummaryList'),
-      saveGroupBtn: document.getElementById('saveGroupBtn'),
-      printBtn: document.getElementById('printBtn'),
-      downloadBtn: document.getElementById('downloadBtn'),
-      closeSummaryBtn: document.getElementById('closeSummaryBtn'),
-      classroomGrid: document.getElementById('classroomGrid'),
-      toast: document.getElementById('toast')
+      validationAlert: document.getElementById('validationAlert'),
+      toast: document.getElementById('appToast')
     };
 
-    function createChoiceButtons(container, options, type) {
-      container.innerHTML = '';
-      options.forEach(option => {
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = type === 'confidence' ? 'confidence-btn' : 'choice-btn';
-        btn.dataset.value = option.value;
-        btn.textContent = option.label;
-        container.appendChild(btn);
-      });
-    }
+    let currentClassification = null;
+    let currentConfidence = null;
 
-    function populateCaseSelector() {
-      els.caseSelector.innerHTML = CASES.map((c, i) => `<option value="${i}">${c.id}. ${c.title}</option>`).join('');
-    }
-
-    function getSavedGroups() {
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-      } catch {
-        return [];
-      }
-    }
-
-    function setSavedGroups(groups) {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(groups));
-    }
-
-    function saveProgressLocal() {
-      const payload = {
-        ...appState,
-        updatedAt: new Date().toISOString()
-      };
-      localStorage.setItem(PROGRESS_KEY, JSON.stringify(payload));
-      showToast('Progreso guardado en este dispositivo.');
-    }
-
-    function loadProgressLocal() {
-      try {
-        const saved = JSON.parse(localStorage.getItem(PROGRESS_KEY) || 'null');
-        if (!saved) return;
-        appState.currentIndex = saved.currentIndex || 0;
-        appState.groupName = saved.groupName || '';
-        appState.course = saved.course || '';
-        appState.teacher = saved.teacher || '';
-        appState.responses = saved.responses || {};
-      } catch {
-        // no-op
-      }
-    }
-
-    function clearCurrentProgressStorage() {
-      localStorage.removeItem(PROGRESS_KEY);
-    }
-
-    function showToast(message) {
-      els.toast.textContent = message;
+    // FUNCIONES PRINCIPALES
+    function showToast(msg) {
+      els.toast.textContent = msg;
       els.toast.classList.add('visible');
-      clearTimeout(showToast._timer);
-      showToast._timer = setTimeout(() => els.toast.classList.remove('visible'), 2600);
+      setTimeout(() => els.toast.classList.remove('visible'), 3000);
     }
 
-    function showValidation(message) {
-      els.validationAlert.textContent = message;
+    function showAlert(msg) {
+      els.validationAlert.textContent = msg;
       els.validationAlert.classList.add('visible');
+      setTimeout(() => els.validationAlert.classList.remove('visible'), 4000);
     }
 
-    function hideValidation() {
-      els.validationAlert.classList.remove('visible');
-      els.validationAlert.textContent = '';
-    }
-
-    function switchToGame() {
+    function initGame() {
+      appState.groupName = els.groupNameInput.value || 'Estudiante Anónimo';
+      appState.course = els.courseInput.value || '';
+      els.groupNameStat.textContent = appState.groupName;
+      
       els.startScreen.classList.remove('visible');
       els.gameScreen.classList.add('visible');
-      renderAll();
-    }
-
-    function switchToStart() {
-      els.gameScreen.classList.remove('visible');
-      els.startScreen.classList.add('visible');
-      renderSavedGroups();
-    }
-
-    function classificationLabel(value) {
-      return value === 'fuente' ? 'Fuente' : value === 'humo' ? 'Humo' : value === 'revisar' ? 'Revisar mejor' : 'Sin definir';
-    }
-
-    function confidenceLabel(value) {
-      const found = CONFIDENCE_OPTIONS.find(item => item.value === Number(value));
-      return found ? found.label : '—';
-    }
-
-    function markActiveButtons(container, value) {
-      [...container.querySelectorAll('button')].forEach(btn => {
-        btn.classList.toggle('active', String(btn.dataset.value) === String(value));
-      });
-    }
-
-    function getCurrentCase() {
-      return CASES[appState.currentIndex];
-    }
-
-    function getCurrentResponse() {
-      const currentCase = getCurrentCase();
-      return appState.responses[currentCase.id] || {
-        classification: '',
-        who: '',
-        basis: '',
-        risk: '',
-        confidence: '',
-        missingInfo: '',
-        reason: ''
-      };
-    }
-
-    function setResponsePartial(partial) {
-      const currentCase = getCurrentCase();
-      appState.responses[currentCase.id] = {
-        ...getCurrentResponse(),
-        ...partial,
-        updatedAt: new Date().toISOString()
-      };
-      updateDecisionStatus();
-      updateProgress();
-    }
-
-    function validateCurrentResponse() {
-      const res = getCurrentResponse();
-      if (!res.classification) return 'Elegí si este caso te parece Fuente, Humo o algo para Revisar mejor.';
-      if (!res.who) return 'Marcá quién habla o desde dónde surge este saber.';
-      if (!res.basis) return 'Indicá en qué se apoya principalmente.';
-      if (!res.risk) return 'Seleccioná el nivel de riesgo si ese saber estuviera equivocado.';
-      if (!res.confidence) return 'Marcá el nivel de confianza del grupo.';
-      if (!res.missingInfo || res.missingInfo.trim().length < 8) return 'Escriban qué revisarían mejor antes de decidir.';
-      if (!res.reason || res.reason.trim().length < 12) return 'Escriban una justificación breve pero clara.';
-      return '';
-    }
-
-    function saveCurrentCase(showSuccess = true) {
-      hideValidation();
-      const validationMessage = validateCurrentResponse();
-      if (validationMessage) {
-        showValidation(validationMessage);
-        return false;
-      }
-      saveProgressLocal();
-      if (showSuccess) showToast('Caso guardado.');
-      return true;
-    }
-
-    function updateDecisionStatus() {
-      const res = getCurrentResponse();
-      const missing = [];
-      if (!res.classification) missing.push('clasificación');
-      if (!res.who) missing.push('quién habla');
-      if (!res.basis) missing.push('base');
-      if (!res.risk) missing.push('riesgo');
-      if (!res.confidence) missing.push('confianza');
-      if (!res.missingInfo) missing.push('revisión');
-      if (!res.reason) missing.push('justificación');
-      els.decisionStatus.textContent = missing.length ? `Falta: ${missing.slice(0,2).join(', ')}${missing.length > 2 ? '…' : ''}` : 'Completo';
-    }
-
-    function updateProgress() {
-      const answered = Object.values(appState.responses).filter(res => {
-        return res.classification && res.who && res.basis && res.risk && res.confidence && res.missingInfo && res.reason;
-      }).length;
-      els.answeredCount.textContent = `${answered}/${CASES.length}`;
-      els.groupNameStat.textContent = appState.groupName || 'Sin nombre';
-      const pct = Math.round((answered / CASES.length) * 100);
-      els.progressFill.style.width = `${pct}%`;
-      els.progressText.textContent = answered === 0
-        ? 'Todavía no hay decisiones completas guardadas.'
-        : `Hay ${answered} caso(s) completos. Avance general: ${pct}%.`;
-    }
-
-    function renderSavedGroups() {
-      const groups = getSavedGroups().sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
-      const html = groups.length
-        ? groups.slice(0, 5).map(group => `
-          <article class="saved-group-item">
-            <header>
-              <div>
-                <strong>${escapeHtml(group.groupName || 'Grupo sin nombre')}</strong>
-                <div class="xsmall muted">${escapeHtml(group.course || 'Curso no indicado')} · ${formatDate(group.savedAt)}</div>
-              </div>
-              <span class="tag ${group.summary.topCategory}">${classificationLabel(group.summary.topCategory)}</span>
-            </header>
-            <div class="xsmall muted">${group.summary.shortText}</div>
-          </article>
-        `).join('')
-        : '<div class="xsmall muted">Todavía no hay grupos guardados en este dispositivo.</div>';
-      els.savedGroupsList.innerHTML = html;
+      renderCase();
     }
 
     function renderCase() {
-      const item = getCurrentCase();
-      const res = getCurrentResponse();
+      const c = CASES[appState.currentIndex];
       els.statusPill.textContent = `Caso ${appState.currentIndex + 1} de ${CASES.length}`;
-      els.caseNumber.textContent = `Caso ${item.id}`;
-      els.caseTitle.textContent = item.title;
-      els.caseFormat.textContent = `${item.icon} ${item.format}`;
-      els.caseContent.textContent = item.content;
-      els.caseMeta.innerHTML = `
-        <span class="meta-chip">Origen: ${escapeHtml(item.source)}</span>
-        <span class="meta-chip">Atención: ${escapeHtml(item.riskTag)}</span>
-      `;
-      els.heroTitle.textContent = item.title;
-      els.hintText.textContent = item.hint;
-      els.hintBox.classList.remove('visible');
-      els.caseSelector.value = String(appState.currentIndex);
+      els.caseTitle.textContent = c.title;
+      
+      // Inyectar el Iframe de YouTube responsive
+      const iframeHtml = `
+        <div class="video-container">
+          <iframe src="${c.videoUrl}" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>`;
+      
+      els.caseContent.innerHTML = `<p>${c.description}</p>` + iframeHtml;
 
-      markActiveButtons(els.classificationGrid, res.classification);
-      markActiveButtons(els.whoGrid, res.who);
-      markActiveButtons(els.basisGrid, res.basis);
-      markActiveButtons(els.confidenceGrid, res.confidence);
-      els.riskSelect.value = res.risk || '';
-      els.missingInfo.value = res.missingInfo || '';
-      els.reasonText.value = res.reason || '';
-      hideValidation();
-      updateDecisionStatus();
+      // Restaurar respuestas previas si existen
+      const saved = appState.responses[c.id];
+      currentClassification = saved ? saved.classification : null;
+      currentConfidence = saved ? saved.confidence : null;
+      els.justificationInput.value = saved ? saved.justification : '';
+
+      updateButtonStates();
       updateProgress();
+    }
+
+    function updateButtonStates() {
+      els.classBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.value === currentClassification);
+      });
+      els.confBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.value === currentConfidence);
+      });
       els.prevBtn.disabled = appState.currentIndex === 0;
-      els.nextBtn.disabled = appState.currentIndex === CASES.length - 1;
+      els.nextBtn.textContent = appState.currentIndex === CASES.length - 1 ? 'Finalizar' : 'Guardar y Avanzar';
     }
 
-    function renderSummary() {
-      const responses = CASES.map(item => ({ item, res: appState.responses[item.id] || null }));
-      const complete = responses.filter(({ res }) => res && res.classification);
-      const counts = { fuente: 0, humo: 0, revisar: 0 };
-      let confidenceSum = 0;
-      let confidenceN = 0;
+    function updateProgress() {
+      const answered = Object.keys(appState.responses).length;
+      els.answeredCount.textContent = `${answered}/${CASES.length}`;
+      els.progressFill.style.width = `${(answered / CASES.length) * 100}%`;
+    }
 
-      complete.forEach(({ res }) => {
-        if (counts[res.classification] !== undefined) counts[res.classification] += 1;
-        if (res.confidence) {
-          confidenceSum += Number(res.confidence);
-          confidenceN += 1;
-        }
-      });
+    function saveCurrentCase() {
+      if (!currentClassification || !currentConfidence || !els.justificationInput.value.trim()) {
+        showAlert("¡Epa! No te escapes sin mojarte en esta. Completá las tres preguntas para avanzar.");
+        return false;
+      }
 
-      const topCategory = Object.entries(counts).sort((a,b) => b[1] - a[1])[0]?.[0] || 'revisar';
-      const avgConfidence = confidenceN ? (confidenceSum / confidenceN).toFixed(1) : '—';
-
-      els.summaryDistribution.textContent = `Fuente: ${counts.fuente} · Humo: ${counts.humo} · Revisar mejor: ${counts.revisar}. La tendencia dominante del grupo fue ${classificationLabel(topCategory).toLowerCase()}.`;
-      els.summaryConfidence.textContent = confidenceN ? `Promedio: ${avgConfidence}/5. La etiqueta más alta no siempre implica mejor criterio: también importa cómo justificaron.` : 'Todavía no hay confianza promedio disponible.';
-      els.summaryContext.textContent = `${appState.groupName || 'Grupo sin nombre'}${appState.course ? ` · ${appState.course}` : ''}${appState.teacher ? ` · ${appState.teacher}` : ''}`;
-
-      els.caseSummaryList.innerHTML = responses.map(({ item, res }) => {
-        if (!res || !res.classification) {
-          return `
-            <article class="case-list-item">
-              <header>
-                <strong>${item.id}. ${escapeHtml(item.title)}</strong>
-                <span class="tag">Sin responder</span>
-              </header>
-              <div class="xsmall muted">Este caso todavía no tiene una decisión guardada.</div>
-            </article>
-          `;
-        }
-
-        return `
-          <article class="case-list-item">
-            <header>
-              <div>
-                <strong>${item.id}. ${escapeHtml(item.title)}</strong>
-                <div class="xsmall muted">Quién habla: ${escapeHtml(labelFromOptions(WHO_OPTIONS, res.who))} · Base: ${escapeHtml(labelFromOptions(BASIS_OPTIONS, res.basis))}</div>
-              </div>
-              <span class="tag ${res.classification}">${classificationLabel(res.classification)}</span>
-            </header>
-            <div class="tag-row">
-              <span class="tag">Riesgo: ${escapeHtml(res.risk)}</span>
-              <span class="tag">Confianza: ${escapeHtml(confidenceLabel(res.confidence))}</span>
-            </div>
-            <div class="small">${escapeHtml(res.reason)}</div>
-            <div class="xsmall muted"><strong>Revisar mejor:</strong> ${escapeHtml(res.missingInfo)}</div>
-          </article>
-        `;
-      }).join('');
-
-      renderClassroomBoard();
-      els.summaryPanel.classList.add('visible');
-      appState.summaryVisible = true;
-
-      return {
-        counts,
-        topCategory,
-        avgConfidence,
-        shortText: `Fuente ${counts.fuente} · Humo ${counts.humo} · Revisar ${counts.revisar} · Confianza ${avgConfidence}/5`
+      appState.responses[CASES[appState.currentIndex].id] = {
+        classification: currentClassification,
+        confidence: currentConfidence,
+        justification: els.justificationInput.value.trim()
       };
+      
+      updateProgress();
+      return true;
     }
 
-    function renderClassroomBoard() {
-      const groups = getSavedGroups();
-      if (!groups.length) {
-        els.classroomGrid.innerHTML = '<div class="agreement-item"><div class="small muted">Guardá al menos un grupo para ver el tablero comparativo del aula.</div></div>';
-        return;
-      }
+    // EVENT LISTENERS
+    els.startBtn.addEventListener('click', initGame);
+    els.backToStartBtn.addEventListener('click', () => {
+      els.gameScreen.classList.remove('visible');
+      els.startScreen.classList.add('visible');
+    });
 
-      const data = CASES.map(item => {
-        const bucket = { fuente: 0, humo: 0, revisar: 0 };
-        groups.forEach(group => {
-          const response = group.responses?.[item.id];
-          if (response?.classification && bucket[response.classification] !== undefined) {
-            bucket[response.classification] += 1;
-          }
-        });
-        const total = bucket.fuente + bucket.humo + bucket.revisar;
-        const top = Object.entries(bucket).sort((a, b) => b[1] - a[1])[0]?.[0] || 'revisar';
-        return { item, bucket, total, top };
+    els.classBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        currentClassification = e.target.dataset.value;
+        updateButtonStates();
       });
+    });
 
-      els.classroomGrid.innerHTML = data.map(({ item, bucket, total, top }) => {
-        const f = total ? (bucket.fuente / total) * 100 : 0;
-        const h = total ? (bucket.humo / total) * 100 : 0;
-        const r = total ? (bucket.revisar / total) * 100 : 0;
-        return `
-          <article class="agreement-item">
-            <header>
-              <div>
-                <strong>${item.id}. ${escapeHtml(item.title)}</strong>
-                <div class="xsmall muted">${total} grupo(s) respondieron este caso.</div>
-              </div>
-              <span class="tag ${top}">${classificationLabel(top)}</span>
-            </header>
-            <div class="bar-stack">
-              <div class="bar-track">
-                <div class="bar-segment fuente" style="width:${f}%"></div>
-                <div class="bar-segment humo" style="width:${h}%"></div>
-                <div class="bar-segment revisar" style="width:${r}%"></div>
-              </div>
-              <div class="tag-row">
-                <span class="tag fuente">Fuente ${bucket.fuente}</span>
-                <span class="tag humo">Humo ${bucket.humo}</span>
-                <span class="tag revisar">Revisar ${bucket.revisar}</span>
-              </div>
-            </div>
-          </article>
-        `;
-      }).join('');
-    }
-
-    function buildExportPayload() {
-      const summary = renderSummary();
-      return {
-        app: 'Fuente o Humo',
-        exportedAt: new Date().toISOString(),
-        groupName: appState.groupName,
-        course: appState.course,
-        teacher: appState.teacher,
-        summary,
-        responses: appState.responses,
-        cases: CASES.map(({ id, title, format, source, riskTag }) => ({ id, title, format, source, riskTag }))
-      };
-    }
-
-    function saveGroup() {
-      const payload = buildExportPayload();
-      const groups = getSavedGroups();
-      const filtered = groups.filter(g => !(g.groupName === payload.groupName && g.course === payload.course));
-      filtered.push({
-        ...payload,
-        savedAt: new Date().toISOString()
+    els.confBtns.forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        currentConfidence = e.target.dataset.value;
+        updateButtonStates();
       });
-      setSavedGroups(filtered);
-      renderSavedGroups();
-      renderClassroomBoard();
-      showToast('Grupo guardado en el tablero de aula.');
-    }
+    });
 
-    function downloadJSON() {
-      const payload = buildExportPayload();
-      const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
-      const fileName = `fuente-o-humo-${slugify(appState.groupName || 'grupo')}.json`;
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(url);
-      showToast('Archivo JSON descargado.');
-    }
-
-    function formatDate(isoString) {
-      try {
-        return new Date(isoString).toLocaleString('es-AR', {
-          year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'
-        });
-      } catch {
-        return isoString;
-      }
-    }
-
-    function labelFromOptions(options, value) {
-      return options.find(item => String(item.value) === String(value))?.label || '—';
-    }
-
-    function slugify(text) {
-      return String(text)
-        .toLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9]+/g, '-')
-        .replace(/^-+|-+$/g, '');
-    }
-
-    function escapeHtml(str) {
-      return String(str ?? '')
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;')
-        .replace(/'/g, '&#039;');
-    }
-
-    function clearCurrentCase() {
-      const item = getCurrentCase();
-      delete appState.responses[item.id];
-      renderCase();
-      saveProgressLocal();
-      showToast('Este caso se limpió.');
-    }
-
-    function startNewGame(fromDashboard = false) {
-      const nextGroupName = els.groupNameInput.value.trim() || 'Grupo sin nombre';
-      const nextCourse = els.courseInput.value.trim();
-      const nextTeacher = els.teacherInput.value.trim();
-      const sameContext = nextGroupName === appState.groupName && nextCourse === appState.course && nextTeacher === appState.teacher;
-
-      if (!sameContext || fromDashboard) {
-        appState.currentIndex = 0;
-        appState.responses = {};
-        clearCurrentProgressStorage();
-      }
-
-      appState.groupName = nextGroupName;
-      appState.course = nextCourse;
-      appState.teacher = nextTeacher;
-      if (!appState.groupName) appState.groupName = 'Grupo sin nombre';
-      switchToGame();
-      if (fromDashboard) {
-        renderSummary();
-      }
-    }
-
-    function renderAll() {
-      populateCaseSelector();
-      renderSavedGroups();
-      renderCase();
-      els.summaryPanel.classList.toggle('visible', appState.summaryVisible);
-      if (appState.summaryVisible) renderSummary();
-    }
-
-    function bindSelectableButtons(container, key) {
-      container.addEventListener('click', event => {
-        const btn = event.target.closest('button[data-value]');
-        if (!btn) return;
-        setResponsePartial({ [key]: btn.dataset.value });
-        markActiveButtons(container, btn.dataset.value);
-      });
-    }
-
-    function init() {
-      createChoiceButtons(els.whoGrid, WHO_OPTIONS, 'choice');
-      createChoiceButtons(els.basisGrid, BASIS_OPTIONS, 'choice');
-      createChoiceButtons(els.confidenceGrid, CONFIDENCE_OPTIONS, 'confidence');
-      populateCaseSelector();
-      renderSavedGroups();
-      loadProgressLocal();
-      if (appState.groupName) {
-        els.groupNameInput.value = appState.groupName;
-        els.courseInput.value = appState.course;
-        els.teacherInput.value = appState.teacher;
-      }
-
-      bindSelectableButtons(els.classificationGrid, 'classification');
-      bindSelectableButtons(els.whoGrid, 'who');
-      bindSelectableButtons(els.basisGrid, 'basis');
-      bindSelectableButtons(els.confidenceGrid, 'confidence');
-
-      els.riskSelect.addEventListener('change', e => setResponsePartial({ risk: e.target.value }));
-      els.missingInfo.addEventListener('input', e => setResponsePartial({ missingInfo: e.target.value }));
-      els.reasonText.addEventListener('input', e => setResponsePartial({ reason: e.target.value }));
-
-      els.startBtn.addEventListener('click', () => {
-        appState.summaryVisible = false;
-        startNewGame(false);
-      });
-
-      els.openDashboardBtn.addEventListener('click', () => {
-        if (!els.groupNameInput.value.trim()) els.groupNameInput.value = 'Docente / tablero';
-        appState.summaryVisible = true;
-        startNewGame(true);
-      });
-
-      els.caseSelector.addEventListener('change', e => {
-        appState.currentIndex = Number(e.target.value);
+    els.prevBtn.addEventListener('click', () => {
+      if (appState.currentIndex > 0) {
+        appState.currentIndex--;
         renderCase();
-      });
+      }
+    });
 
-      els.hintBtn.addEventListener('click', () => {
-        els.hintBox.classList.toggle('visible');
-      });
-
-      els.backToStartBtn.addEventListener('click', () => switchToStart());
-      els.teacherBoardBtn.addEventListener('click', () => {
-        appState.summaryVisible = true;
-        renderSummary();
-        showToast('Tablero de aula actualizado.');
-      });
-
-      els.clearStorageBtn.addEventListener('click', () => {
-        if (!confirm('¿Seguro querés borrar todos los grupos guardados en este dispositivo?')) return;
-        localStorage.removeItem(STORAGE_KEY);
-        renderSavedGroups();
-        renderClassroomBoard();
-        showToast('Se borraron los grupos guardados.');
-      });
-
-      els.prevBtn.addEventListener('click', () => {
-        if (appState.currentIndex > 0) {
-          appState.currentIndex -= 1;
-          renderCase();
-        }
-      });
-
-      els.nextBtn.addEventListener('click', () => {
-        if (!saveCurrentCase(false)) {
-          showValidation(validateCurrentResponse());
-          return;
-        }
+    els.nextBtn.addEventListener('click', () => {
+      if (saveCurrentCase()) {
         if (appState.currentIndex < CASES.length - 1) {
-          appState.currentIndex += 1;
+          appState.currentIndex++;
           renderCase();
+        } else {
+          showToast('¡Llegaste al final! Excelente trabajo debatiendo.');
+          // Acá podrías agregar la lógica para mostrar el informe final
         }
-      });
+      }
+    });
 
-      els.saveCaseBtn.addEventListener('click', () => saveCurrentCase(true));
-      els.finishBtn.addEventListener('click', () => {
-        renderSummary();
-        showToast('Informe final listo.');
-        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
-      });
-
-      els.restartCurrentBtn.addEventListener('click', clearCurrentCase);
-      els.saveProgressBtn.addEventListener('click', saveProgressLocal);
-      els.saveGroupBtn.addEventListener('click', saveGroup);
-      els.printBtn.addEventListener('click', () => window.print());
-      els.downloadBtn.addEventListener('click', downloadJSON);
-      els.closeSummaryBtn.addEventListener('click', () => {
-        els.summaryPanel.classList.remove('visible');
-        appState.summaryVisible = false;
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-      });
-
-      renderAll();
-    }
-
-    init();
   </script>
 </body>
 </html>
